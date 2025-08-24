@@ -1,0 +1,66 @@
+<?php use App\Core\Auth; ?>
+<?php ob_start(); ?>
+<div class="header-actions">
+  <h1>Users</h1>
+  <form method="get" action="/users" style="display:inline-flex; align-items:center; gap:0.5em; margin-right: 1em;">
+    <label>Role</label>
+    <select name="role" id="role-filter" onchange="this.form.submit()">
+      <option value="">All</option>
+      <option value="admin" <?= isset($_GET['role']) && $_GET['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+      <option value="doctor" <?= isset($_GET['role']) && $_GET['role'] === 'doctor' ? 'selected' : '' ?>>Doctor</option>
+      <option value="patient" <?= isset($_GET['role']) && $_GET['role'] === 'patient' ? 'selected' : '' ?>>Patient</option>
+    </select>
+  </form>
+  <a class="btn" href="/users/create">+ New User</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <?php if (Auth::role() === 'admin'): ?>
+      <th>Role</th>
+      <?php endif; ?>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach (($items ?? []) as $it): ?>
+    <tr>
+      <td><?= htmlspecialchars($it['id'] ?? '') ?></td>
+      <td><?= htmlspecialchars($it['FullName'] ?? '') ?></td>
+      <td><?= htmlspecialchars($it['Email'] ?? '') ?></td>
+      <td><?= htmlspecialchars($it['Phone'] ?? '') ?></td>
+      <?php if (Auth::role() === 'admin'): ?>
+      <td><?= htmlspecialchars($it['Role'] ?? '') ?></td>
+      <?php endif; ?>
+      <td class="actions">
+        <a href="/users/show/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">View</a>
+        <a href="/users/edit/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">Edit</a>
+        <form method="post" action="/users/delete/<?= urlencode((string)($it['id'] ?? '')) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
+          <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
+<!-- Pagination -->
+<?php
+$totalPages = ceil(($total ?? 0) / ($limit ?? 20));
+if ($totalPages > 1): ?>
+  <nav class="pagination">
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+      <a class="page-link <?= $i == ($page ?? 1) ? 'active' : '' ?>" href="/users?page=<?= $i ?>&limit=<?= $limit ?? 20 ?>">
+        <?= $i ?>
+      </a>
+    <?php endfor; ?>
+  </nav>
+<?php endif; ?>
+
+<?php $content = ob_get_clean(); echo App\Core\View::render('partials/layout', compact('content')); ?>
