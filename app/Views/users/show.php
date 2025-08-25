@@ -1,31 +1,47 @@
+<?php
+$name   = $item['FullName'] ?? 'Unknown';
+$avatar = !empty($item['avatar'])
+    ? $item['avatar']
+    : 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=007bff&color=fff&size=128';
+?>
+
 <?php ob_start(); ?>
-<h1>Profile</h1>
-
-<div class="patient-profile">
-  <div class="profile-header">
-    <img class="avatar" src="<?= htmlspecialchars($item['avatar'] ?? '/images/default-avatar.png') ?>" alt="Avatar">
-    <div class="profile-info">
-      <h2><?= htmlspecialchars($item['name'] ?? 'Unknown') ?></h2>
-      <p><strong>ID: </strong> <?= htmlspecialchars($item['id'] ?? '-') ?></p>
-      <p><strong>Date of Birth: </strong> <?= htmlspecialchars($item['dob'] ?? '-') ?></p>
-      <p><strong>Gender: </strong> <?= htmlspecialchars($item['gender'] ?? '-') ?></p>
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <img class="avatar" src="<?= htmlspecialchars($avatar, ENT_QUOTES, 'UTF-8') ?>" alt="Avatar">
+      <h2 class="profile-name"><?= htmlspecialchars($name) ?></h2>
+      <p class="profile-id">ID: <?= htmlspecialchars($item['id'] ?? '-') ?></p>
     </div>
-  </div>
 
-  <div class="profile-details">
-    <p><strong>Phone: </strong> <?= htmlspecialchars($item['phone'] ?? '-') ?></p>
-    <p><strong>Address: </strong> <?= htmlspecialchars($item['address'] ?? '-') ?></p>
-    <p><strong>Email: </strong> <?= htmlspecialchars($item['email'] ?? '-') ?></p>
-    <!-- <p><strong>Medical History: </strong><br> <?= nl2br(htmlspecialchars($item['medical_history'] ?? 'N/A')) ?></p> -->
-    <p><strong>Registered at: </strong> <?= htmlspecialchars($item['created_at'] ?? '-') ?></p>
-  </div>
+    <div class="profile-details">
+      <p><strong>Role:</strong> <?= htmlspecialchars($item['Role'] ?? '-') ?></p>
+      <p><strong>Email:</strong> <?= htmlspecialchars($item['Email'] ?? '-') ?></p>
+      <p><strong>Date of Birth:</strong> 
+          <?php 
+              if (!empty($item['Birthday'])) {
+                  $dob = new DateTime($item['Birthday']);
+                  echo $dob->format('d/m/Y');
+              } else {
+                  echo '-';
+              }
+          ?>
+      </p>
+      <p><strong>Gender:</strong> <?= htmlspecialchars($item['Gender'] ?? '-') ?></p>
+      <p><strong>Phone:</strong> <?= htmlspecialchars($item['Phone'] ?? '-') ?></p>
+      <p><strong>Address:</strong> <?= htmlspecialchars($item['Address'] ?? '-') ?></p>
 
-  <div class="profile-actions">
-    <?php if (!empty($item['id'])): ?>
-      <a href="/patients/edit/<?= urlencode((string)$item['id']) ?>" class="btn">Edit</a>
-    <?php endif; ?>
-    <a href="/patients" class="btn btn-secondary">Back</a>
+    </div>
+
+    <div class="profile-actions">
+        <a href="/account/edit" class="btn">Edit Profile</a>
+        <a href="/auth/change-password" class="btn">Change Password</a>
+        <a href="/account" class="btn btn-secondary">Back</a>
+    </div>
   </div>
 </div>
 
-<?php $content = ob_get_clean(); echo App\Core\View::render('partials/layout', compact('content')); ?>
+<?php 
+$content = ob_get_clean(); 
+echo App\Core\View::render('partials/layout', compact('content')); 
+?>

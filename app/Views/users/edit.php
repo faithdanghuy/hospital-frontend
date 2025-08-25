@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
-<h1>Edit Patient</h1>
+<h1>Edit Profile</h1>
 <?php if (!empty($error)): ?><div class="alert error">{{ htmlspecialchars($error) }}</div><?php endif; ?>
-<form method="post" action="/patients/{{ urlencode($item['id'] ?? '') }}/update">
+<form method="post" action="/account/update">
   <input type="hidden" name="_csrf" value="{{ htmlspecialchars($_SESSION['csrf_token']) }}">
   
   <label>Name</label>

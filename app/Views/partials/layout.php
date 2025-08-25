@@ -28,8 +28,8 @@
 
           <?php $role = Auth::role(); ?>
           <?php if ($role === 'admin'): ?>
-            <a href="/users/<?= Auth::user()['id'] ?>"><i class="icon fa-solid fa-address-card"></i>Profile</a>
-            <a href="/users"><i class="icon fa fa-user"></i>Users</a>
+            <a href="/account/profile"><i class="icon fa-solid fa-address-card"></i>Profile</a>
+            <a href="/account"><i class="icon fa fa-user"></i>Users</a>
             <a href="/medications"><i class="icon fa fa-pills"></i>Medication</a>
             <a href="/appointments"><i class="icon fa fa-calendar"></i>Appointments</a>
             <a href="/prescriptions"><i class="icon fa fa-file-prescription"></i>Prescriptions</a>

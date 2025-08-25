@@ -9,13 +9,19 @@ class Controller {
         // Basic CSRF init
         if (empty($_SESSION['csrf_token'])) $_SESSION['csrf_token'] = bin2hex(random_bytes(16));
     }
+    
     protected function view(string $template, array $data = []) {
         echo View::render($template, $data);
     }
+
     protected function redirect(string $path) {
         header('Location: ' . $path); exit;
     }
-    protected function isPost(): bool { return $_SERVER['REQUEST_METHOD'] === 'POST'; }
+
+    protected function isPost(): bool { 
+        return $_SERVER['REQUEST_METHOD'] === 'POST'; 
+    }
+
     protected function requireCsrf() {
         if ($this->isPost()) {
             $token = $_POST['_csrf'] ?? '';

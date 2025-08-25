@@ -39,16 +39,12 @@ class NotificationController extends Controller {
         $item = $res['data'] ?? [];
         return $this->view('notifications/edit', compact('item'));
     }
+    
+    // Delete a notification by id
     public function delete($id) {
         $this->requireCsrf();
         $api = new ApiClient($this->config);
-        $api->delete('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id));
+        $api->delete('NOTIFICATION_SERVICE', '/notifications/delete/' . urlencode($id));
         return $this->redirect('/notifications');
-    }
-    public function show($id) {
-        $api = new ApiClient($this->config);
-        $res = $api->get('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id));
-        $item = $res['data'] ?? [];
-        return $this->view('notifications/show', compact('item'));
     }
 }

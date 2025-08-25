@@ -25,6 +25,10 @@
       <td>
         <a href="/appointments/show/{{ urlencode($it['id']) }}">View</a>
         <a href="/appointments/edit/{{ urlencode($it['id']) }}">Edit</a>
+        <form method="post" action="/appointments/{{ urlencode($it['id']) }}/status" style="display:inline" onsubmit="return confirm('Delete?')">
+          <input type="hidden" name="_csrf" value="{{ htmlspecialchars($_SESSION['csrf_token']) }}">
+          <button type="submit">Confirm</button>
+        </form>
         <form method="post" action="/appointments/delete/{{ urlencode($it['id']) }}" style="display:inline" onsubmit="return confirm('Delete?')">
           <input type="hidden" name="_csrf" value="{{ htmlspecialchars($_SESSION['csrf_token']) }}">
           <button type="submit">Delete</button>

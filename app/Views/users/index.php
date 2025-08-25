@@ -17,32 +17,31 @@
 <table>
   <thead>
     <tr>
-      <th>Id</th>
+      <th>No.</th>
       <th>Full Name</th>
       <th>Email</th>
       <th>Phone</th>
-      <?php if (Auth::role() === 'admin'): ?>
+      <th>Gender</th>
       <th>Role</th>
-      <?php endif; ?>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
+    <?php $stt = ($page ?? 1 - 1) * ($limit ?? 10) + 1; ?>
     <?php foreach (($items ?? []) as $it): ?>
     <tr>
-      <td><?= htmlspecialchars($it['id'] ?? '') ?></td>
-      <td><?= htmlspecialchars($it['FullName'] ?? '') ?></td>
-      <td><?= htmlspecialchars($it['Email'] ?? '') ?></td>
-      <td><?= htmlspecialchars($it['Phone'] ?? '') ?></td>
-      <?php if (Auth::role() === 'admin'): ?>
-      <td><?= htmlspecialchars($it['Role'] ?? '') ?></td>
-      <?php endif; ?>
+      <td><?= $stt++ ?></td>
+      <td><?= htmlspecialchars($it['FullName'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['Email'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['Phone'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['Gender'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['Role'] ?? '-') ?></td>
       <td class="actions">
-        <a href="/users/show/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">View</a>
+        <a href="/account/detail/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">View</a>
         <a href="/users/edit/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">Edit</a>
         <form method="post" action="/users/delete/<?= urlencode((string)($it['id'] ?? '')) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
           <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
-          <button type="submit" class="delete-btn">Delete</button>
+          <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
         </form>
       </td>
     </tr>
@@ -52,7 +51,7 @@
 
 <!-- Pagination -->
 <?php
-$totalPages = ceil(($total ?? 0) / ($limit ?? 20));
+$totalPages = ceil(($total ?? 0) / ($limit ?? 10));
 if ($totalPages > 1): ?>
   <nav class="pagination">
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>

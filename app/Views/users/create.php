@@ -5,7 +5,7 @@
   <div class="alert error">{{ htmlspecialchars($error) }}</div>
 <?php endif; ?>
 
-<form method="post">
+<form method="post" action="/account/store">
   <input type="hidden" name="_csrf" value="{{ htmlspecialchars($_SESSION['csrf_token']) }}">
 
   <label>Name</label>
