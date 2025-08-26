@@ -2,7 +2,6 @@
 namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Auth;
-use App\Core\Middleware;
 use App\Services\ApiClient;
 
 class AppointmentController extends Controller {
@@ -10,14 +9,13 @@ class AppointmentController extends Controller {
     public function index() {
         $api = new ApiClient($this->config);
 
-        $user = Auth::user();
-        $payload = [
-            'role' => $user['role'],
-            'id'   => $user['id']
-        ];
-
-        $res = $api->post('APPOINTMENT_SERVICE', '/appointments', $payload);
+        $res = $api->get('APPOINTMENT_SERVICE', '/appointments');
         $items = $res['data'] ?? [];
+
+        echo '<pre>';
+        var_dump($res);
+        echo '</pre>';
+        exit;
 
         return $this->view('appointments/index', compact('items'));
     }
@@ -29,18 +27,18 @@ class AppointmentController extends Controller {
 
     // Process the create appointment functionality
     public function store(){
-        if ($this->isPost()) {
-            $this->requireCsrf();
-            $api = new ApiClient($this->config);
-            $payload = $_POST;
-            unset($payload['_csrf']);
-            $res = $api->post('APPOINTMENT_SERVICE', '/appointments', $payload);
-            if (($res['status'] ?? 500) < 300) 
-                return $this->redirect('/appointments');
-            $error = $res['data']['message'] ?? 'Create appointment failed';
-            return $this->view('appointments/create', compact('error'));
+        $this->requireCsrf();
+        $api = new ApiClient($this->config);
+        $payload = $_POST;
+        unset($payload['_csrf']);
+
+        $res = $api->post('APPOINTMENT_SERVICE', '/appointments', $payload);
+        if (($res['status'] ?? 500) < 300) {
+            return $this->redirect('/appointments');
         }
-        return $this->view('appointments/create');
+
+        $error = $res['data']['message'] ?? 'Create appointment failed';
+        return $this->view('appointments', compact('error'));
     }
 
     public function edit($id) {
@@ -72,6 +70,7 @@ class AppointmentController extends Controller {
         return $this->view('appointments/show', compact('item'));
     }
 
+    // Delete an appointment
     public function delete($id) {
         $this->requireCsrf();
         $api = new ApiClient($this->config);

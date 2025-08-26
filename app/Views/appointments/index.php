@@ -14,23 +14,20 @@
       <th>Actions</th>
     </tr>
   </thead>
+
   <tbody>
     <?php foreach (($items ?? []) as $it): ?>
     <tr>
-      <td>{{ htmlspecialchars($it['id'] ?? '') }}</td>
-      <td>{{ htmlspecialchars($it['patient_id'] ?? '') }}</td>
-      <td>{{ htmlspecialchars($it['doctor_id'] ?? '') }}</td>
-      <td>{{ htmlspecialchars($it['time'] ?? '') }}</td>
-      <td>{{ htmlspecialchars($it['status'] ?? '') }}</td>
+      <td><?= htmlspecialchars($it['id'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['patient_id'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['doctor_id'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['time'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['status'] ?? '-') ?></td>
       <td>
-        <a href="/appointments/show/{{ urlencode($it['id']) }}">View</a>
-        <a href="/appointments/edit/{{ urlencode($it['id']) }}">Edit</a>
-        <form method="post" action="/appointments/{{ urlencode($it['id']) }}/status" style="display:inline" onsubmit="return confirm('Delete?')">
-          <input type="hidden" name="_csrf" value="{{ htmlspecialchars($_SESSION['csrf_token']) }}">
-          <button type="submit">Confirm</button>
-        </form>
-        <form method="post" action="/appointments/delete/{{ urlencode($it['id']) }}" style="display:inline" onsubmit="return confirm('Delete?')">
-          <input type="hidden" name="_csrf" value="{{ htmlspecialchars($_SESSION['csrf_token']) }}">
+        <a href="/appointments/<?= urlencode($it['id']) ?>">View</a>
+        <a href="/appointments/edit/<?= urlencode($it['id']) ?>">Edit</a>
+        <form method="post" action="/appointments/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
+          <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
           <button type="submit">Delete</button>
         </form>
       </td>

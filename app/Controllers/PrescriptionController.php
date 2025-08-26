@@ -47,16 +47,18 @@ class PrescriptionController extends Controller {
         $item = $res['data'] ?? [];
         return $this->view('prescriptions/edit', compact('item'));
     }
-    public function delete($id) {
-        $this->requireCsrf();
-        $api = new ApiClient($this->config);
-        $api->delete('PRESCRIPTION_SERVICE', '/prescriptions/' . urlencode($id));
-        return $this->redirect('/prescriptions');
-    }
+
     public function show($id) {
         $api = new ApiClient($this->config);
         $res = $api->get('PRESCRIPTION_SERVICE', '/prescriptions/' . urlencode($id));
         $item = $res['data'] ?? [];
         return $this->view('prescriptions/show', compact('item'));
+    }
+
+    public function delete($id) {
+        $this->requireCsrf();
+        $api = new ApiClient($this->config);
+        $api->delete('PRESCRIPTION_SERVICE', '/prescriptions/' . urlencode($id));
+        return $this->redirect('/prescriptions');
     }
 }

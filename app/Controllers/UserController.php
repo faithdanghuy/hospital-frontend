@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 use App\Core\Controller;
-use App\Core\Auth;
-use App\Core\Middleware;
 use App\Services\ApiClient;
 
 class UserController extends Controller {
@@ -19,15 +17,8 @@ class UserController extends Controller {
             'limit' => (int)$limit,
             'sort' => $sort
         ]);
-
         $data = $res['data']['data'] ?? [];
         $items = $data['rows'] ?? [];
-
-        // echo '<pre>';
-        // var_dump($res);
-        // echo '</pre>';
-        // exit;
-
         return $this->view('users/index', [
             'items' => $items,
             'limit' => $data['limit'] ?? null,
@@ -45,7 +36,7 @@ class UserController extends Controller {
     // Creating the user
     public function store() {
         if (!$this->isPost()) {
-            return $this->redirect('/users/create');
+            return $this->redirect('users/create');
         }
 
         $this->requireCsrf();
@@ -55,7 +46,7 @@ class UserController extends Controller {
         $res = $api->post('AUTH_SERVICE', '/auth/register', $payload);
             
         if (($res['status'] ?? 500) < 300) {
-            return $this->redirect('/users');
+            return $this->redirect('/account');
         }
         $error = $res['data']['message'] ?? 'Create user failed';
         $old = $payload;
@@ -66,12 +57,16 @@ class UserController extends Controller {
     public function edit() {
         $api = new ApiClient($this->config);
         $res = $api->get('AUTH_SERVICE', '/account/profile');
-        $item = $res['data'] ?? [];
-        // echo '<pre>';
-        // var_dump($res['data']['data']['user']);
-        // echo '</pre>';
-        // exit;
-        return $this->view('users/edit', compact('item'));
+        $item = $res['data']['data'] ?? [];
+        return $this->view('users/edit-self', compact('item'));
+    }
+
+    // Open other user edit form
+    public function editUser($id) {
+        $api = new ApiClient($this->config);
+        $res = $api->get('AUTH_SERVICE', '/account/detail/' . urlencode($id));
+        $item = $res['data']['data'] ?? [];
+        return $this->view('users/edit-user', compact('item', 'id'));
     }
 
     // Update current user profile
@@ -80,38 +75,59 @@ class UserController extends Controller {
         $api = new ApiClient($this->config);
         $payload = $_POST;
         unset($payload['_csrf']);
-        $res = $api->put('AUTH_SERVICE', '/account/update', $payload);
+        $res = $api->patch('AUTH_SERVICE', '/account/update', $payload);
 
         if (($res['status'] ?? 500) < 300) {
-            return $this->redirect('/users');
+            return $this->redirect('/account/profile');
+        }
+        $error = $res['data']['message'] ?? 'Update profile failed';
+        $old = $payload;
+        return $this->view('users/edit-self', compact('error', 'old'));
+    }
+
+    // Update other user profile
+    public function updateUser($id) {
+        $this->requireCsrf();
+        $api = new ApiClient($this->config);
+        $payload = $_POST;
+        unset($payload['_csrf']);
+        $res = $api->patch('AUTH_SERVICE', '/account/edit/' . urlencode($id), $payload);
+
+        if (($res['status'] ?? 500) < 300) {
+            return $this->redirect('/account/detail/' . urlencode($id));
         }
         $error = $res['data']['message'] ?? 'Update user failed';
         $old = $payload;
-        return $this->view('users/edit', compact('error', 'old', 'id'));
+        return $this->view('users/edit-user', compact('error', 'old', 'id'));
     }
 
     // Open current user profile
     public function myProfile() {
         $api = new ApiClient($this->config);
-        //$user = Auth::user();
         $res = $api->get('AUTH_SERVICE', '/account/profile');
-        $item = $res['data'] ?? $res ?? [];
-        return $this->view('users/show', ['item' => $item]);
+        // echo '<pre>';
+        // var_dump($res);
+        // echo '</pre>';
+        // exit;
+        $item = $res['data']['data'] ?? $res ?? [];
+        return $this->view('users/show-self', ['item' => $item]);
     }
     
     // Open user detail by id
     public function show($id) {
         $api = new ApiClient($this->config);
         $res = $api->get('AUTH_SERVICE', '/account/detail/' . urlencode($id));
-        $item = $res['data']['data']['user'] ?? [];
-        return $this->view('users/show', compact('item'));
+        $item = $res['data']['data'] ?? [];
+        return $this->view('users/show-user', compact('item'));
     }
 
     // Delete user by id
     public function delete($id) {
         $this->requireCsrf();
-        $api = new ApiClient($this->config);
-        $api->delete('AUTH_SERVICE', '/account/delete/' . urlencode($id));
-        return $this->redirect('/users');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['_method'] ?? '') === 'DELETE') {
+            $api = new ApiClient($this->config);
+            $api->delete('AUTH_SERVICE', '/account/delete/' . urlencode($id));
+            return $this->redirect('/account');
+        }
     }
 }

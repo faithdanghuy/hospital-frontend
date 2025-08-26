@@ -25,10 +25,10 @@
         <nav>
           <a href="/"><i class="icon fa fa-house"></i>Home</a>
           <a href="/notifications"><i class="icon fa fa-bell"></i>Notifications</a>
+          <a href="/account/profile"><i class="icon fa-solid fa-address-card"></i>Profile</a>
 
           <?php $role = Auth::role(); ?>
           <?php if ($role === 'admin'): ?>
-            <a href="/account/profile"><i class="icon fa-solid fa-address-card"></i>Profile</a>
             <a href="/account"><i class="icon fa fa-user"></i>Users</a>
             <a href="/medications"><i class="icon fa fa-pills"></i>Medication</a>
             <a href="/appointments"><i class="icon fa fa-calendar"></i>Appointments</a>

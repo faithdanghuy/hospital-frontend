@@ -2,34 +2,30 @@
 <h1>Change Password</h1>
 
 <form method="POST" action="/account/change-password" class="change-password-form">
-  <div class="form-group">
-    <label>Current Password</label>
-        <input type="password" 
-            id="current_password" 
-            name="current_password" 
-            placeholder="Enter current password"
-            required>
-  </div>
+  <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
 
-  <div class="form-group">
-    <label>New Password</label>
-        <input type="password" 
-            id="new_password" 
-            name="new_password" 
-            placeholder="Enter new password"
-            required 
-            minlength="6">
-  </div>
+  <label>Current Password</label>
+    <input type="password" 
+        id="current_password" 
+        name="current_password" 
+        placeholder="Enter current password"
+        required>
+    
+  <label>New Password</label>
+    <input type="password" 
+        id="new_password" 
+        name="new_password" 
+        placeholder="Enter new password"
+        required 
+        minlength="6">
 
-  <div class="form-group">
-    <label>Confirm New Password</label>
-        <input type="password" 
-            id="confirm_password" 
-            name="confirm_password" 
-            placeholder="Confirm new password"
-            required 
-            minlength="6">
-  </div>
+  <label>Confirm New Password</label>
+    <input type="password" 
+        id="confirm_password" 
+        name="confirm_password" 
+        placeholder="Confirm new password"
+        required 
+        minlength="6">
 
   <div class="form-actions">
     <button type="submit" class="btn">Update Password</button>

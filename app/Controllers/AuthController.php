@@ -23,8 +23,8 @@ class AuthController extends Controller {
     
         $api = new ApiClient($this->config);
         $payload = [
+            'password' => $_POST['password'] ?? '',
             'phone'    => $_POST['phone'] ?? '',
-            'password' => $_POST['password'] ?? ''
         ];
     
         $res = $api->post('AUTH_SERVICE', '/auth/login', $payload);
@@ -55,25 +55,23 @@ class AuthController extends Controller {
 
         if ($newPassword !== $confirmPassword) {
             $_SESSION['error'] = 'New password and confirm password do not match.';
-            return $this->redirect('/account/edit');
+            return $this->redirect('/account/change-password');
         }
 
         $api = new ApiClient($this->config);
         $payload = [
-            'current_password' => $currentPassword,
+            'old_password' => $currentPassword,
             'new_password' => $newPassword
         ];
 
-        $res = $api->patch('AUTH_SERVICE', '/auth/change-password', $payload, [
-            'Authorization: Bearer ' . (Auth::user()['access_token'] ?? '')
-        ]);
+        $res = $api->patch('AUTH_SERVICE', '/auth/change-password', $payload);
 
         if (($res['status'] ?? 500) === 200) {
             $_SESSION['success'] = 'Password changed successfully.';
-            return $this->redirect('/account/edit');
+            return $this->redirect('/account');
         } else {
             $_SESSION['error'] = $res['data']['message'] ?? 'Failed to change password.';
-            return $this->redirect('/account/edit');
+            return $this->redirect('/account');
         }
     }
 

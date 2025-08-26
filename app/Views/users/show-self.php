@@ -1,7 +1,7 @@
 <?php
 $name   = $item['FullName'] ?? 'Unknown';
-$avatar = !empty($item['avatar'])
-    ? $item['avatar']
+$avatar = !empty($item['Avatar'])
+    ? $item['Avatar']
     : 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=007bff&color=fff&size=128';
 ?>
 
@@ -35,7 +35,7 @@ $avatar = !empty($item['avatar'])
 
     <div class="profile-actions">
         <a href="/account/edit" class="btn">Edit Profile</a>
-        <a href="/auth/change-password" class="btn">Change Password</a>
+        <a href="/account/change-password" class="btn">Change Password</a>
         <a href="/account" class="btn btn-secondary">Back</a>
     </div>
   </div>

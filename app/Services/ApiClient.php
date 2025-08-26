@@ -17,10 +17,8 @@ class ApiClient {
         if ($token = Auth::token()) {
             $headers[] = 'Authorization: Bearer ' . $token;
         }
-
-        if ($method === 'GET' && $data !== null) {
-            $url .= '?' . http_build_query($data);
-            $data = null; // không gửi body
+        if ($data !== null) {
+            $headers[] = 'Content-Type: application/json';
         }
 
         curl_setopt_array($ch, [
@@ -31,9 +29,7 @@ class ApiClient {
             CURLOPT_HTTPHEADER => $headers,
         ]);
 
-        // Với POST/PUT thì gửi body JSON
         if ($data !== null) {
-            $headers[] = 'Content-Type: application/json';
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         }
 
@@ -48,7 +44,6 @@ class ApiClient {
         $json = json_decode($res, true);
         return ['status' => $status, 'data' => $json];
     }
-
 
     public function get(string $service, string $path) {
         return $this->request('GET', $this->config[$service] . $path);

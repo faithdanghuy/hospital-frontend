@@ -44,8 +44,11 @@ $router->add('GET', '/account', [new UserController(), 'index'], [Middleware::au
 $router->add('GET', '/account/profile', [new UserController(), 'myProfile'], [Middleware::auth()]);
 $router->add('GET', '/account/edit', [new UserController(), 'edit'], [Middleware::auth()]);
 $router->add('POST', '/account/update', [new UserController(), 'update'], [Middleware::auth()]);
+
 $router->add('GET', '/account/detail/{id}', [new UserController(), 'show'], [Middleware::auth(), Middleware::roles(['admin'])]);
-$router->add('DELETE', '/account/delete', [new UserController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('GET', '/account/edit/{id}', [new UserController(), 'editUser'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('POST', '/account/edit/{id}', [new UserController(), 'updateUser'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('POST', '/account/delete/{id}', [new UserController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin'])]);
 
 // Appointments
 $router->add('GET', '/appointments', [new AppointmentController(), 'index'], [Middleware::auth()]);

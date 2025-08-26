@@ -5,12 +5,15 @@ use App\Core\Middleware;
 use App\Services\ApiClient;
 
 class NotificationController extends Controller {
+    // Get all notifications
     public function index() {
         $api = new ApiClient($this->config);
         $res = $api->get('NOTIFICATION_SERVICE', '/notifications');
         $items = ($res['data'] ?? [])['items'] ?? ($res['data'] ?? []);
         return $this->view('notifications/index', compact('items'));
     }
+
+    // Open create notification form
     public function create() {
         if ($this->isPost()) {
             $this->requireCsrf();
@@ -24,21 +27,22 @@ class NotificationController extends Controller {
         }
         return $this->view('notifications/create');
     }
-    public function edit($id) {
-        $api = new ApiClient($this->config);
-        if ($this->isPost()) {
-            $this->requireCsrf();
-            $payload = $_POST; unset($payload['_csrf']);
-            $res = $api->put('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id), $payload);
-            if (($res['status'] ?? 500) < 300) return $this->redirect('/notifications');
-            $error = $res['data']['message'] ?? 'Update failed';
-            $item = $payload;
-            return $this->view('notifications/edit', compact('item','error'));
-        }
-        $res = $api->get('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id));
-        $item = $res['data'] ?? [];
-        return $this->view('notifications/edit', compact('item'));
-    }
+
+    // public function edit($id) {
+    //     $api = new ApiClient($this->config);
+    //     if ($this->isPost()) {
+    //         $this->requireCsrf();
+    //         $payload = $_POST; unset($payload['_csrf']);
+    //         $res = $api->put('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id), $payload);
+    //         if (($res['status'] ?? 500) < 300) return $this->redirect('/notifications');
+    //         $error = $res['data']['message'] ?? 'Update failed';
+    //         $item = $payload;
+    //         return $this->view('notifications/edit', compact('item','error'));
+    //     }
+    //     $res = $api->get('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id));
+    //     $item = $res['data'] ?? [];
+    //     return $this->view('notifications/edit', compact('item'));
+    // }
     
     // Delete a notification by id
     public function delete($id) {
