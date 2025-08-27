@@ -1,7 +1,7 @@
 <?php
-$name   = $item['FullName'] ?? 'Unknown';
-$avatar = !empty($item['Avatar'])
-    ? $item['Avatar']
+$name   = $item['full_name'] ?? 'Unknown';
+$avatar = !empty($item['avatar'])
+    ? $item['avatar']
     : 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=007bff&color=fff&size=128';
 ?>
 
@@ -15,21 +15,21 @@ $avatar = !empty($item['Avatar'])
     </div>
 
     <div class="profile-details">
-      <p><strong>Role:</strong> <?= htmlspecialchars($item['Role'] ?? '-') ?></p>
-      <p><strong>Email:</strong> <?= htmlspecialchars($item['Email'] ?? '-') ?></p>
+      <p><strong>Role:</strong> <?= htmlspecialchars($item['role'] ?? '-') ?></p>
+      <p><strong>Email:</strong> <?= htmlspecialchars($item['email'] ?? '-') ?></p>
       <p><strong>Date of Birth:</strong> 
           <?php 
-              if (!empty($item['Birthday'])) {
-                  $dob = new DateTime($item['Birthday']);
+              if (!empty($item['birthday'])) {
+                  $dob = new DateTime($item['birthday']);
                   echo $dob->format('d/m/Y');
               } else {
                   echo '-';
               }
           ?>
       </p>
-      <p><strong>Gender:</strong> <?= htmlspecialchars($item['Gender'] ?? '-') ?></p>
-      <p><strong>Phone:</strong> <?= htmlspecialchars($item['Phone'] ?? '-') ?></p>
-      <p><strong>Address:</strong> <?= htmlspecialchars($item['Address'] ?? '-') ?></p>
+      <p><strong>Gender:</strong> <?= htmlspecialchars($item['gender'] ?? '-') ?></p>
+      <p><strong>Phone:</strong> <?= htmlspecialchars($item['phone'] ?? '-') ?></p>
+      <p><strong>Address:</strong> <?= htmlspecialchars($item['address'] ?? '-') ?></p>
 
     </div>
 

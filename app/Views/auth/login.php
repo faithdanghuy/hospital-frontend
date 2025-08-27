@@ -7,7 +7,7 @@
   <title>Login</title>
 </head>
 <body>
-  <div class="wrapper">
+  <div class="login-wrapper">
     <div class="form-container">
       <h1>Login</h1>
 
@@ -40,6 +40,7 @@
               
         <button type="submit">Login</button>
       </form>
+
     </div>
   </div>
 </body>

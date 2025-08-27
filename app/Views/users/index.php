@@ -30,11 +30,12 @@
     <?php foreach (($items ?? []) as $it): ?>
     <tr>
       <td><?= $stt++ ?></td>
-      <td><?= htmlspecialchars($it['FullName'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['Email'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['Phone'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['Gender'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['Role'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['full_name'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['email'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['phone'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['gender'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['role'] ?? '-') ?></td>
+      
       <td class="actions">
         <a href="/account/detail/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">View</a>
         <a href="/account/edit/<?= urlencode((string)($it['id'] ?? '')) ?>" class="btn">Edit</a>
@@ -52,12 +53,10 @@
 </table>
 
 <!-- Pagination -->
-<?php
-$totalPages = ceil(($total ?? 0) / ($limit ?? 10));
-if ($totalPages > 1): ?>
+<?php if ($total_pages > 1): ?>
   <nav class="pagination">
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-      <a class="page-link <?= $i == ($page ?? 1) ? 'active' : '' ?>" href="/users?page=<?= $i ?>&limit=<?= $limit ?? 10 ?>">
+    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+      <a class="page-link <?= $i == ($page ?? 1) ? 'active' : '' ?>" href="/account?page=<?= $i ?>&limit=<?= $limit ?? 10 ?>">
         <?= $i ?>
       </a>
     <?php endfor; ?>

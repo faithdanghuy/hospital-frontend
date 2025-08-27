@@ -9,27 +9,27 @@
 
     <input type="hidden" 
           name="avatar" 
-          value="<?= htmlspecialchars($old['avatar'] ?? ($item['Avatar'] ?? '')) ?>"
+          value="<?= htmlspecialchars($old['avatar'] ?? ($item['avatar'] ?? '')) ?>"
           required>
 
     <label>Name</label>
       <input name="full_name" 
           type="text"
-          value="<?= htmlspecialchars($old['full_name'] ?? ($item['FullName'] ?? '')) ?>" 
+          value="<?= htmlspecialchars($old['full_name'] ?? ($item['full_name'] ?? '')) ?>" 
           placeholder="Full Name"
           required>
 
     <label>Email</label>
       <input name="email" 
           type="email"
-          value="<?= htmlspecialchars($old['email'] ?? ($item['Email'] ?? '')) ?>" 
+          value="<?= htmlspecialchars($old['email'] ?? ($item['email'] ?? '')) ?>" 
           placeholder="Email"
           required>
 
     <label>Address</label>
       <input name="address" 
           type="text"
-          value="<?= htmlspecialchars($old['address'] ?? ($item['Address'] ?? '')) ?>" 
+          value="<?= htmlspecialchars($old['address'] ?? ($item['address'] ?? '')) ?>" 
           placeholder="Address"
           required>
 
@@ -38,8 +38,8 @@
           type="date" 
           id="dob_date" 
           value="<?php 
-              if (!empty($item['Birthday'])) {
-                  $dob = new DateTime($item['Birthday']);
+              if (!empty($item['birthday'])) {
+                  $dob = new DateTime($item['birthday']);
                   echo $dob->format('Y-m-d');
               }?>"
           required>
@@ -47,8 +47,8 @@
 
     <label>Gender</label>
       <select name="gender" required>
-          <option value="male" <?= (strtolower($item["Gender"] ?? "") == "male") ? 'selected' : '' ?>>Male</option>
-          <option value="female" <?= (strtolower($item["Gender"] ?? "") == "female") ? 'selected' : '' ?>>Female</option>
+          <option value="male" <?= (strtolower($item["gender"] ?? "") == "male") ? 'selected' : '' ?>>Male</option>
+          <option value="female" <?= (strtolower($item["gender"] ?? "") == "female") ? 'selected' : '' ?>>Female</option>
       </select>
 
     <button type="submit">Save</button>

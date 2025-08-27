@@ -19,6 +19,7 @@ class UserController extends Controller {
         ]);
         $data = $res['data']['data'] ?? [];
         $items = $data['rows'] ?? [];
+
         return $this->view('users/index', [
             'items' => $items,
             'limit' => $data['limit'] ?? null,
@@ -35,10 +36,6 @@ class UserController extends Controller {
 
     // Creating the user
     public function store() {
-        if (!$this->isPost()) {
-            return $this->redirect('users/create');
-        }
-
         $this->requireCsrf();
         $api = new ApiClient($this->config);
         $payload = $_POST;
@@ -105,10 +102,6 @@ class UserController extends Controller {
     public function myProfile() {
         $api = new ApiClient($this->config);
         $res = $api->get('AUTH_SERVICE', '/account/profile');
-        // echo '<pre>';
-        // var_dump($res);
-        // echo '</pre>';
-        // exit;
         $item = $res['data']['data'] ?? $res ?? [];
         return $this->view('users/show-self', ['item' => $item]);
     }

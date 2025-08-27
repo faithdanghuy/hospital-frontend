@@ -15,7 +15,7 @@
 
     <?php if (Auth::check()): ?>
       <div class="sidebar-top">
-        <div class="brand">Medicare</div>
+        <div class="brand"><a href="/">Medicare</a></div>
         <span class="user-name">
           Hi, <?= htmlspecialchars(Auth::user()['full_name'] ?? 'Guest') ?>!
         </span>

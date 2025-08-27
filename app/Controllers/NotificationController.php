@@ -28,6 +28,14 @@ class NotificationController extends Controller {
         return $this->view('notifications/create');
     }
 
+    // Mark as read
+    public function markAsRead($id){
+        $this->requireCsrf();
+        $api = new ApiClient($this->config);
+        $res = $api->post('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id), ['read' => true]);
+        return $this->redirect('/notifications');
+    }
+
     // public function edit($id) {
     //     $api = new ApiClient($this->config);
     //     if ($this->isPost()) {

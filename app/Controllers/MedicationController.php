@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 use App\Core\Controller;
-use App\Core\Middleware;
 use App\Services\ApiClient;
 
 class MedicationController extends Controller {
@@ -49,7 +48,7 @@ class MedicationController extends Controller {
         return $this->view('medications/edit', compact('item'));
     }
 
-
+    // Show medication details
     public function show($id) {
         $api = new ApiClient($this->config);
         $res = $api->get('MEDICATION_SERVICE', '/medications/' . urlencode($id));

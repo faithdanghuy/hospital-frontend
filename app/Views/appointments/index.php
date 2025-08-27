@@ -7,29 +7,39 @@
 <table>
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Doctor id</th>
+      <th>No.</th>
+      <th>Date</th>
       <th>Time</th>
+      <th>Doctor</th>
+      <th>Patient</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
+    <?php $stt = 1; ?>
     <?php foreach (($items ?? []) as $it): ?>
+    <?php 
+      $status = strtolower($it['status'] ?? '-'); 
+      $statusClass = '';
+      switch ($status) {
+        case 'pending':   $statusClass = 'badge-pending'; break;
+        case 'confirmed': $statusClass = 'badge-confirmed'; break;
+        case 'cancelled': $statusClass = 'badge-cancelled'; break;
+      }
+    ?>
     <tr>
-      <td><?= htmlspecialchars($it['id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['patient_id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['doctor_id'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($stt++) ?></td>
+      <td><?= htmlspecialchars($it['date'] ?? '-') ?></td>
       <td><?= htmlspecialchars($it['time'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['status'] ?? '-') ?></td>
-      <td>
-        <a href="/appointments/<?= urlencode($it['id']) ?>">View</a>
-        <a href="/appointments/edit/<?= urlencode($it['id']) ?>">Edit</a>
-        <form method="post" action="/appointments/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
-          <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-          <button type="submit">Delete</button>
-        </form>
+      <td><?= htmlspecialchars($it['doctor']['full_name'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['patient']['full_name'] ?? '-') ?></td>
+      <td><span class="badge <?= $statusClass ?>"><?= htmlspecialchars($it['status'] ?? '-') ?></span></td>
+
+      <td class="actions">
+        <a class="btn" href="/appointment/<?= urlencode($it['id']) ?>">View</a>
+        <a class="btn" href="/appointment/edit/<?= urlencode($it['id']) ?>">Edit</a>
       </td>
     </tr>
     <?php endforeach; ?>

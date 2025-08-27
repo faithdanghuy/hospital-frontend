@@ -14,7 +14,6 @@ class Router {
 
         foreach ($this->routes as $route) {
             if ($method === $route['method'] && $this->match($route['path'], $uri, $params)) {
-                // Middleware chain
                 foreach ($route['middleware'] as $mw) {
                     $res = $mw();
                     if ($res === false) {
