@@ -7,14 +7,22 @@ class MedicationController extends Controller {
     // Get all med data
     public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('MEDICATION_SERVICE', '/medications');
-        $items = ($res['data'] ?? [])['items'] ?? ($res['data'] ?? []);
-        return $this->view('medications/index', compact('items'));
+        $res = $api->get('PRESCRIPTION_SERVICE', '/medication/filter');
+        $items = ($res['data']['data']['rows'] ?? []);
+        return $this->view('medication/index', compact('items'));
+    }
+
+    // Show medication details
+    public function show($id) {
+        $api = new ApiClient($this->config);
+        $res = $api->get('PRESCRIPTION_SERVICE', '/medication/detail/' . urlencode($id));
+        $item = $res['data']['data'] ?? [];
+        return $this->view('medication/show', compact('item'));
     }
 
     // Create a new medication
     public function create() {
-        return $this->view('medications/create');
+        return $this->view('medication/create');
     }
 
     // Store a new medication
@@ -23,44 +31,61 @@ class MedicationController extends Controller {
         $api = new ApiClient($this->config);
         $payload = $_POST;
         unset($payload['_csrf']);
-        
-        $res = $api->post('MEDICATION_SERVICE', '/medications', $payload);
-        if (($res['status'] ?? 500) < 300) 
+
+        $payload = [
+            "drug_name"   => $_POST['drug_name'],
+            "description" => $_POST['description'],
+            "stock"       => (int) $_POST['stock'],
+            "unit"        => $_POST['unit']
+        ];
+
+        // echo '<pre>';
+        // var_dump($payload);
+        // echo '</pre>';
+        // exit;
+        $res = $api->post('PRESCRIPTION_SERVICE', '/medication/create', $payload);
+        if (($res['status'] ?? 500) < 300) {
             return $this->redirect('/medications');
+        }
         $error = $res['data']['message'] ?? 'Create failed';
-        return $this->view('medications/create', compact('error'));
+        return $this->view('medication/create', compact('error'));
     }
 
     // Edit an existing medication
     public function edit($id) {
         $api = new ApiClient($this->config);
-        if ($this->isPost()) {
-            $this->requireCsrf();
-            $payload = $_POST; unset($payload['_csrf']);
-            $res = $api->put('MEDICATION_SERVICE', '/medications/' . urlencode($id), $payload);
-            if (($res['status'] ?? 500) < 300) return $this->redirect('/medications');
-            $error = $res['data']['message'] ?? 'Update failed';
-            $item = $payload;
-            return $this->view('medications/edit', compact('item','error'));
-        }
-        $res = $api->get('MEDICATION_SERVICE', '/medications/' . urlencode($id));
-        $item = $res['data'] ?? [];
-        return $this->view('medications/edit', compact('item'));
+        $res = $api->get('PRESCRIPTION_SERVICE', '/medication/detail/' . urlencode($id));
+        $item = $res['data']['data'] ?? [];
+        return $this->view('medication/edit', compact('item'));
     }
 
-    // Show medication details
-    public function show($id) {
+    // Update an existing medication
+    public function update($id) {
+        $this->requireCsrf();
         $api = new ApiClient($this->config);
-        $res = $api->get('MEDICATION_SERVICE', '/medications/' . urlencode($id));
-        $item = $res['data'] ?? [];
-        return $this->view('medications/show', compact('item'));
+        $payload = $_POST;
+        unset($payload['_csrf']);
+
+        $payload = [
+            "drug_name"   => $_POST['drug_name'],
+            "description" => $_POST['description'],
+            "stock"       => (int) $_POST['stock'],
+            "unit"        => $_POST['unit']
+        ];
+
+        $res = $api->patch('PRESCRIPTION_SERVICE', '/medication/update/' . urlencode($id), $payload);
+        if (($res['status'] ?? 500) < 300) {
+            return $this->redirect('/medications');
+        }
+        $error = $res['data']['message'] ?? 'Update failed';
+        return $this->view('medication/edit', compact('error'));
     }
 
     // Delete a medication
     public function delete($id) {
         $this->requireCsrf();
         $api = new ApiClient($this->config);
-        $api->delete('MEDICATION_SERVICE', '/medications/' . urlencode($id));
+        $api->delete('PRESCRIPTION_SERVICE', '/medication/delete/' . urlencode($id));
         return $this->redirect('/medications');
     }
 }

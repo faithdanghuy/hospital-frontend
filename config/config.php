@@ -1,5 +1,5 @@
 <?php
-$appUrl = getenv('APP_URL') ?: 'https://4a31e1fb3c82.ngrok-free.app';
+$appUrl = getenv('APP_URL') ?: 'https://c8ba054f0ba5.ngrok-free.app';
 
 return [
     // App settings
@@ -8,7 +8,6 @@ return [
 
     // Base URLs for Go microservices
     'AUTH_SERVICE'           => $appUrl . '/user-service',
-    'MEDICATION_SERVICE'     => $appUrl . '/medication-service',
     'APPOINTMENT_SERVICE'    => $appUrl . '/appointment-service',
     'PRESCRIPTION_SERVICE'   => $appUrl . '/prescription-service',
     'NOTIFICATION_SERVICE'   => $appUrl . '/noti-service',

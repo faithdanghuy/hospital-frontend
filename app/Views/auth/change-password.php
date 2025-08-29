@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 <h1>Change Password</h1>
 
-<form method="POST" action="/account/change-password" class="change-password-form">
+<form method="POST" action="/account/change-password">
   <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
 
   <label>Current Password</label>

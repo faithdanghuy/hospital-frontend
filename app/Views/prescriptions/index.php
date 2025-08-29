@@ -10,30 +10,43 @@
 <table>
   <thead>
     <tr>
-      <th>Id</th>
+      <th>No.</th>
       <th>Patient</th>
       <th>Doctor</th>
-      <th>Medication</th>
-      <th>Quantity</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
+    <?php $stt = 1; ?>
     <?php foreach (($items ?? []) as $it): ?>
+    <?php 
+      $status = strtolower($it['status'] ?? '-'); 
+      $statusClass = '';
+      switch ($status) {
+        case 'not_collected':   $statusClass = 'badge-not-collected'; break;
+        case 'collected':       $statusClass = 'badge-collected'; break;
+      }
+    ?>
     <tr>
-      <td><?= htmlspecialchars($it['id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['patient_id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['doctor_id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['drug_id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['quantity'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['status'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($stt++) ?></td>
+      <td><?= htmlspecialchars($it['patient']['full_name'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($it['doctor']['full_name'] ?? '-') ?></td>
+      <?php
+        $statusText = '-';
+        switch ($status) {
+          case 'not_collected': $statusText = 'Not Collected'; break;
+          case 'collected':     $statusText = 'Collected'; break;
+          default: $statusText = htmlspecialchars($it['status'] ?? '-');
+        }
+      ?>
+      <td><span class="badge <?= $statusClass ?>"><?= $statusText ?></span></td>
       <td>
-        <a href="/prescriptions/show/<?= urlencode($it['id']) ?>">View</a>
-        <a href="/prescriptions/edit/<?= urlencode($it['id']) ?>">Edit</a>
+        <a href="/prescription/detail/<?= urlencode($it['id']) ?>" class="btn">View</a>
+        <a href="/prescriptions/edit/<?= urlencode($it['id']) ?>" class="btn">Edit</a>
         <form method="post" action="/prescriptions/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
           <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-          <button type="submit">Delete</button>
+          <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
         </form>
       </td>
     </tr>

@@ -49,11 +49,6 @@ class AppointmentController extends Controller {
 
         $doctors = $doctors['data']['data']['rows'] ?? [];
         $patients = $patients['data']['data']['rows'] ?? [];
-        // echo '<pre>';
-        // var_dump($doctors);
-        // var_dump($patients);
-        // echo '</pre>';
-        // exit;
         return $this->view('appointments/create', compact('doctors', 'patients'));
     }
 
@@ -63,8 +58,10 @@ class AppointmentController extends Controller {
         $api = new ApiClient($this->config);
         $payload = $_POST;
         unset($payload['_csrf']);
+        unset($payload['date']);
+        unset($payload['time']);
 
-        $res = $api->post('APPOINTMENT_SERVICE', '/appointments/create', $payload);
+        $res = $api->post('APPOINTMENT_SERVICE', '/appointment/create', $payload);
         if (($res['status'] ?? 500) < 300) {
             return $this->redirect('/appointments');
         }
@@ -93,7 +90,10 @@ class AppointmentController extends Controller {
         $api = new ApiClient($this->config);
         $payload = $_POST;
         unset($payload['_csrf']);
-        $res = $api->patch('APPOINTMENT_SERVICE', '/appointments/edit/' . urlencode($id), $payload);
+        unset($payload['date']);
+        unset($payload['time']);
+     
+        $res = $api->patch('APPOINTMENT_SERVICE', '/appointment/edit/' . urlencode($id), $payload);
         if (($res['status'] ?? 500) < 300) {
             return $this->redirect('/appointments');
         }

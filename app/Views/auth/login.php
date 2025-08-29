@@ -9,7 +9,7 @@
 <body>
   <div class="login-wrapper">
     <div class="form-container">
-      <h1>Login</h1>
+      <h1 style="margin-bottom: 1rem;">Login</h1>
 
       <!-- Error handling -->
       <?php if (!empty($error)): ?>
@@ -40,7 +40,6 @@
               
         <button type="submit">Login</button>
       </form>
-
     </div>
   </div>
 </body>

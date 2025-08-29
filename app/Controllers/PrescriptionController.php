@@ -8,9 +8,21 @@ class PrescriptionController extends Controller {
     // Get app prescription data
     public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('PRESCRIPTION_SERVICE', '/prescriptions');
-        $items = ($res['data'] ?? [])['items'] ?? ($res['data'] ?? []);
+        $res = $api->get('PRESCRIPTION_SERVICE', '/prescription/filter');
+        $items = $res['data']['data']['rows'] ?? [];
         return $this->view('prescriptions/index', compact('items'));
+    }
+
+    public function show($id) {
+        $api = new ApiClient($this->config);
+        $res = $api->get('PRESCRIPTION_SERVICE', '/prescription/detail/' . urlencode($id));
+        $item = $res['data']['data'] ?? [];
+
+        // echo '<pre>';
+        // print_r($item);
+        // echo '</pre>';
+        // exit;
+        return $this->view('prescriptions/show', compact('item'));
     }
 
     // Create a new prescription
@@ -46,13 +58,6 @@ class PrescriptionController extends Controller {
         $res = $api->get('PRESCRIPTION_SERVICE', '/prescriptions/' . urlencode($id));
         $item = $res['data'] ?? [];
         return $this->view('prescriptions/edit', compact('item'));
-    }
-
-    public function show($id) {
-        $api = new ApiClient($this->config);
-        $res = $api->get('PRESCRIPTION_SERVICE', '/prescriptions/' . urlencode($id));
-        $item = $res['data'] ?? [];
-        return $this->view('prescriptions/show', compact('item'));
     }
 
     public function delete($id) {

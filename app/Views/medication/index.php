@@ -1,13 +1,13 @@
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Medication</h1>
-  <a class="btn" href="/medications/create">+ New</a>
+  <a class="btn" href="/medication/create">+ New</a>
 </div>
 
 <table>
   <thead>
     <tr>
-      <th>Id</th>
+      <th>No.</th>
       <th>Name</th>
       <th>Stock</th>
       <th>Unit</th>
@@ -16,19 +16,20 @@
     </tr>
   </thead>
   <tbody>
+    <?php $stt = 1; ?>
     <?php foreach (($items ?? []) as $it): ?>
     <tr>
-      <td><?= htmlspecialchars($it['id'] ?? '-') ?></td>
-      <td><?= htmlspecialchars($it['name'] ?? '-') ?></td>
+      <td><?= htmlspecialchars($stt++) ?></td>
+      <td><?= htmlspecialchars($it['drug_name'] ?? '-') ?></td>
       <td><?= htmlspecialchars($it['stock'] ?? '-') ?></td>
       <td><?= htmlspecialchars($it['unit'] ?? '-') ?></td>
       <td><?= htmlspecialchars($it['price'] ?? '-') ?></td>
       <td>
-        <a href="/medications/show/<?= urlencode($it['id']) ?>">View</a>
-        <a href="/medications/edit/<?= urlencode($it['id']) ?>">Edit</a>
-        <form method="post" action="/medications/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
+        <a class="btn "href="/medication/detail/<?= urlencode($it['id']) ?>">View</a>
+        <a class="btn" href="/medication/edit/<?= urlencode($it['id']) ?>">Edit</a>
+        <form method="post" action="/medication/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
           <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-          <button type="submit">Delete</button>
+          <button type="submit" class="btn delete-btn"><i class="fas fa-trash"></i></button>
         </form>
       </td>
     </tr>

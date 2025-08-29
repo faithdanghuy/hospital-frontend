@@ -43,7 +43,6 @@ $router->add('GET', '/account', [new UserController(), 'index'], [Middleware::au
 $router->add('GET', '/account/profile', [new UserController(), 'myProfile'], [Middleware::auth()]);
 $router->add('GET', '/account/edit', [new UserController(), 'edit'], [Middleware::auth()]);
 $router->add('POST', '/account/update', [new UserController(), 'update'], [Middleware::auth()]);
-
 $router->add('GET', '/account/detail/{id}', [new UserController(), 'show'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 $router->add('GET', '/account/edit/{id}', [new UserController(), 'editUser'], [Middleware::auth(), Middleware::roles(['admin'])]);
 $router->add('POST', '/account/edit/{id}', [new UserController(), 'updateUser'], [Middleware::auth(), Middleware::roles(['admin'])]);
@@ -60,9 +59,12 @@ $router->add('POST', '/appointment/change-status/{id}', [new AppointmentControll
 
 // Medications
 $router->add('GET', '/medications', [new MedicationController(), 'index'], [Middleware::auth(), Middleware::roles(['admin'])]);
-$router->add('GET', '/medications/create', [new MedicationController(), 'create'], [Middleware::auth(), Middleware::roles(['admin'])]);
-$router->add('GET', '/medications/{id}', [new MedicationController(), 'show'], [Middleware::auth(), Middleware::roles(['admin'])]);
-$router->add('GET', '/medications/{id}/edit', [new MedicationController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('GET', '/medication/create', [new MedicationController(), 'create'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('POST', '/medication/create', [new MedicationController(), 'store'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('GET', '/medication/detail/{id}', [new MedicationController(), 'show'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('GET', '/medication/edit/{id}', [new MedicationController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('POST', '/medication/update/{id}', [new MedicationController(), 'update'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('POST', '/medication/delete/{id}', [new MedicationController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin'])]);
 
 // Notification
 $router->add('GET', '/notifications', [new NotificationController(), 'index'], [Middleware::auth()]);
@@ -74,9 +76,9 @@ $router->add('GET', '/notifications', [new NotificationController(), 'index'], [
 
 // Prescription
 $router->add('GET', '/prescriptions', [new PrescriptionController(), 'index'], [Middleware::auth()]);
+$router->add('GET', '/prescription/detail/{id}', [new PrescriptionController(), 'show'], [Middleware::auth()]);
 $router->add('GET', '/prescriptions/create', [new PrescriptionController(), 'create'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 $router->add('POST', '/prescriptions', [new PrescriptionController(), 'store'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
-$router->add('GET', '/prescriptions/{id}', [new PrescriptionController(), 'show'], [Middleware::auth()]);
 $router->add('GET', '/prescriptions/{id}/edit', [new PrescriptionController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 
 // Medical Records

@@ -30,7 +30,9 @@ $avatar = !empty($item['avatar'])
       <p><strong>Gender:</strong> <?= htmlspecialchars($item['gender'] ?? '-') ?></p>
       <p><strong>Phone:</strong> <?= htmlspecialchars($item['phone'] ?? '-') ?></p>
       <p><strong>Address:</strong> <?= htmlspecialchars($item['address'] ?? '-') ?></p>
+      <div class="divider"></div>
 
+      <p><strong>Medical History:</strong> Gay </p>
     </div>
 
     <div class="profile-actions">
