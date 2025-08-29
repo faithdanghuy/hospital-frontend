@@ -1,36 +1,6 @@
-<?php 
-$items = [
-    [
-        'id' => 1,
-        'title' => 'Upcoming Appointment',
-        'message' => 'Your appointment with Dr. Smith is scheduled for tomorrow at 10:00 AM.',
-        'is_read' => false
-    ],
-    [
-        'id' => 2,
-        'title' => 'Prescription Ready',
-        'message' => 'Your prescription is ready for pickup at the pharmacy.',
-        'is_read' => true
-    ],
-    [
-        'id' => 3,
-        'title' => 'Lab Results Available',
-        'message' => 'Your recent blood test results are now available.',
-        'is_read' => false
-    ],
-    [
-        'id' => 4,
-        'title' => 'Appointment Cancelled',
-        'message' => 'Your appointment on 28/08 has been cancelled.',
-        'is_read' => true
-    ],
-];
-?>
-
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Notifications</h1>
-  <a href="/notifications/mark-all-read" class="btn">Mark all as read</a>
 </div>
 
 <div class="notifications-list">

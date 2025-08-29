@@ -58,7 +58,7 @@ $updatedAt = !empty($item['updated_at']) ? (new DateTime($item['updated_at']))->
           <thead>
             <tr>
               <th>No.</th>
-              <th>Issued At</th>
+              <th>Med Name</th>
               <th>Quantity</th>
               <th>Dosage</th>
               <th>Instruction</th>
@@ -69,6 +69,11 @@ $updatedAt = !empty($item['updated_at']) ? (new DateTime($item['updated_at']))->
             <?php foreach ($medications as $i => $med): ?>
               <tr>
                 <td><?= $i+1 ?></td>
+
+                <td><?= htmlspecialchars($med['drug_name'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($med['quantity'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($med['dosage'] ?? '-') ?></td>
+                <td><?= htmlspecialchars($med['instruction'] ?? '-') ?></td>
                 <td>
                   <?php 
                     if (!empty($med['issued_at'])) {
@@ -79,10 +84,6 @@ $updatedAt = !empty($item['updated_at']) ? (new DateTime($item['updated_at']))->
                     }
                   ?>
                 </td>
-                <td><?= htmlspecialchars($med['quantity'] ?? '-') ?></td>
-                <td><?= htmlspecialchars($med['dosage'] ?? '-') ?></td>
-                <td><?= htmlspecialchars($med['instruction'] ?? '-') ?></td>
-                <td><?= htmlspecialchars($med['medication_id'] ?? '-') ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -93,7 +94,8 @@ $updatedAt = !empty($item['updated_at']) ? (new DateTime($item['updated_at']))->
     </div>
 
     <div class="profile-actions">
-        <a href="/prescriptions" class="btn btn-secondary">Back</a>
+      <a href="/prescription/edit/<?= htmlspecialchars($prescriptionId) ?>" class="btn">Edit</a>
+      <a href="/prescriptions" class="btn btn-secondary">Back</a>
     </div>
   </div>
 </div>

@@ -2,8 +2,8 @@
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Prescriptions</h1>
-  <?php if (Auth::role() === 'doctor'): ?>
-    <a class="btn" href="/prescriptions/create">+ New</a>
+  <?php if (Auth::role() === 'doctor' || Auth::role() === 'admin'): ?>
+    <a class="btn" href="/prescription/create">+ New</a>
   <?php endif; ?>
 </div>
 
@@ -43,7 +43,7 @@
       <td><span class="badge <?= $statusClass ?>"><?= $statusText ?></span></td>
       <td>
         <a href="/prescription/detail/<?= urlencode($it['id']) ?>" class="btn">View</a>
-        <a href="/prescriptions/edit/<?= urlencode($it['id']) ?>" class="btn">Edit</a>
+        <a href="/prescription/edit/<?= urlencode($it['id']) ?>" class="btn">Edit</a>
         <form method="post" action="/prescriptions/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
           <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
           <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>

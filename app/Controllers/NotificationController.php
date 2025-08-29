@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 use App\Core\Controller;
-use App\Core\Middleware;
 use App\Services\ApiClient;
 
 class NotificationController extends Controller {
@@ -32,7 +31,7 @@ class NotificationController extends Controller {
     public function markAsRead($id){
         $this->requireCsrf();
         $api = new ApiClient($this->config);
-        $res = $api->post('NOTIFICATION_SERVICE', '/notifications/' . urlencode($id), ['read' => true]);
+        $res = $api->post('NOTIFICATION_SERVICE', '/notification/' . urlencode($id), ['read' => true]);
         return $this->redirect('/notifications');
     }
 
@@ -56,7 +55,7 @@ class NotificationController extends Controller {
     public function delete($id) {
         $this->requireCsrf();
         $api = new ApiClient($this->config);
-        $api->delete('NOTIFICATION_SERVICE', '/notifications/delete/' . urlencode($id));
+        $api->delete('NOTIFICATION_SERVICE', '/notification/delete/' . urlencode($id));
         return $this->redirect('/notifications');
     }
 }

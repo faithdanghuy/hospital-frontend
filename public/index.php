@@ -20,7 +20,6 @@ use App\Controllers\AppointmentController;
 use App\Controllers\NotificationController;
 use App\Controllers\PrescriptionController;
 use App\Controllers\MedRecordController;
-use App\Controllers\ReportController;
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -77,9 +76,11 @@ $router->add('GET', '/notifications', [new NotificationController(), 'index'], [
 // Prescription
 $router->add('GET', '/prescriptions', [new PrescriptionController(), 'index'], [Middleware::auth()]);
 $router->add('GET', '/prescription/detail/{id}', [new PrescriptionController(), 'show'], [Middleware::auth()]);
-$router->add('GET', '/prescriptions/create', [new PrescriptionController(), 'create'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
-$router->add('POST', '/prescriptions', [new PrescriptionController(), 'store'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
-$router->add('GET', '/prescriptions/{id}/edit', [new PrescriptionController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
+$router->add('GET', '/prescription/create', [new PrescriptionController(), 'create'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
+$router->add('POST', '/prescription/create', [new PrescriptionController(), 'store'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
+$router->add('GET', '/prescription/edit/{id}', [new PrescriptionController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
+$router->add('POST', '/prescription/update/{id}', [new PrescriptionController(), 'update'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
+$router->add('POST', '/prescription/delete/{id}', [new PrescriptionController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 
 // Medical Records
 $router->add('GET', '/medical-records', [new MedRecordController(), 'index'], [Middleware::auth()]);
