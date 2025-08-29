@@ -66,7 +66,7 @@ $router->add('POST', '/medication/update/{id}', [new MedicationController(), 'up
 $router->add('POST', '/medication/delete/{id}', [new MedicationController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin'])]);
 
 // Notification
-$router->add('GET', '/notifications', [new NotificationController(), 'index'], [Middleware::auth()]);
+$router->add('GET', '/notification', [new NotificationController(), 'index'], [Middleware::auth()]);
 // $router->add('GET', '/notifications/create', [new NotificationController(), 'create'], [Middleware::auth(), Middleware::roles(['admin'])]);
 // $router->add('POST', '/notifications', [new NotificationController(), 'store'], [Middleware::auth(), Middleware::roles(['admin'])]);
 // $router->add('GET', '/notifications/{id}', [new NotificationController(), 'show'], [Middleware::auth()]);

@@ -43,7 +43,6 @@
   <select name="status" required>
     <option value="not_collected">Not Collected</option>
     <option value="collected">Collected</option>
-    <option value="pending">Pending</option>
   </select>
 
   <h3>Medications</h3>

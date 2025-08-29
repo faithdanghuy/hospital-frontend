@@ -5,14 +5,10 @@ use App\Services\ApiClient;
 
 class NotificationController extends Controller {
     // Get all notifications
-    public function index($id) {
+    public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('NOTIFICATION_SERVICE', '/notification/' . urlencode($id));
-        echo '<pre>';
-        print_r($res);
-        echo '</pre>';
-        exit;
-        $items = ($res['data'] ?? [])['items'] ?? ($res['data'] ?? []);
+        $res = $api->get('NOTIFICATION_SERVICE', '/notify/notification');
+        $items = $res['data']['data'] ?? [];
         return $this->view('notifications/index', compact('items'));
     }
 

@@ -24,7 +24,7 @@
 
         <nav>
           <a href="/"><i class="icon fa fa-house"></i>Home</a>
-          <a href="/notifications"><i class="icon fa fa-bell"></i>Notifications</a>
+          <a href="/notification"><i class="icon fa fa-bell"></i>Notifications</a>
           <a href="/account/profile"><i class="icon fa-solid fa-address-card"></i>Profile</a>
 
           <?php $role = Auth::role(); ?>
@@ -36,7 +36,7 @@
 
           <?php elseif ($role === 'doctor'): ?>
             <a href="/appointments"><i class="icon fa fa-calendar"></i>My Appointments</a>
-            <a href="/prescriptions"><i class="icon fa fa-file-prescription"></i>MyPrescriptions</a>
+            <a href="/prescriptions"><i class="icon fa fa-file-prescription"></i>My Prescriptions</a>
 
           <?php elseif ($role === 'patient'): ?>
             <a href="/appointments"><i class="icon fa fa-calendar"></i>My Appointments</a>

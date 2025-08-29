@@ -9,7 +9,7 @@
   ?>
     <div class="notification-card <?= $isRead ? 'read' : 'unread' ?>">
       <h3><?= htmlspecialchars($it['title']) ?></h3>
-      <p><?= htmlspecialchars($it['message']) ?></p>
+      <p><?= htmlspecialchars($it['body']) ?></p>
 
       <div class="actions">
         <?php if (!$isRead): ?>
