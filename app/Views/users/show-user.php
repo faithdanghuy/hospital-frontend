@@ -6,6 +6,21 @@ $avatar = !empty($item['avatar'])
 ?>
 
 <?php ob_start(); ?>
+
+<?php if (!empty($_SESSION['success'])): ?>
+  <div class="alert success">
+      <?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8'); ?>
+  </div>
+  <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION['error'])): ?>
+  <div class="alert error">
+      <?= htmlspecialchars($_SESSION['error'], ENT_QUOTES, 'UTF-8'); ?>
+  </div>
+  <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
 <div class="profile-container">
   <div class="profile-card">
     <div class="profile-header">
@@ -30,7 +45,9 @@ $avatar = !empty($item['avatar'])
       <p><strong>Gender:</strong> <?= htmlspecialchars($item['gender'] ?? '-') ?></p>
       <p><strong>Phone:</strong> <?= htmlspecialchars($item['phone'] ?? '-') ?></p>
       <p><strong>Address:</strong> <?= htmlspecialchars($item['address'] ?? '-') ?></p>
+      <div class="divider"></div>
 
+      <p><strong>Medical History:</strong> - </p>
     </div>
 
     <div class="profile-actions">

@@ -343,6 +343,11 @@ button:hover,
     color: #991b1b; 
 }
 
+.alert.success{ 
+    background: #d1e7dd; 
+    color: #0f5132; 
+}
+
 .grid{ 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 

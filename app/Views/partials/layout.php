@@ -35,9 +35,8 @@
             <a href="/prescriptions"><i class="icon fa fa-file-prescription"></i>Prescriptions</a>
 
           <?php elseif ($role === 'doctor'): ?>
-            <a href="/appointments"><i class="icon fa fa-calendar"></i>Appointments</a>
-            <a href="/patients"><i class="icon fa fa-user"></i>My Patients</a>
-            <a href="/prescriptions"><i class="icon fa fa-file-prescription"></i>Prescriptions</a>
+            <a href="/appointments"><i class="icon fa fa-calendar"></i>My Appointments</a>
+            <a href="/prescriptions"><i class="icon fa fa-file-prescription"></i>MyPrescriptions</a>
 
           <?php elseif ($role === 'patient'): ?>
             <a href="/appointments"><i class="icon fa fa-calendar"></i>My Appointments</a>

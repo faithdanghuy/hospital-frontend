@@ -76,10 +76,6 @@ class PrescriptionController extends Controller {
         }
         unset($med);
         $res = $api->patch('PRESCRIPTION_SERVICE', '/prescription/update/' . urlencode($id), $payload);
-        // echo '<pre>';
-        // print_r($res);
-        // echo '</pre>';
-        // exit;
         if (($res['status'] ?? 500) < 300) {
             return $this->redirect('/prescriptions');
         }

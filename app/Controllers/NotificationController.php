@@ -5,27 +5,31 @@ use App\Services\ApiClient;
 
 class NotificationController extends Controller {
     // Get all notifications
-    public function index() {
+    public function index($id) {
         $api = new ApiClient($this->config);
-        $res = $api->get('NOTIFICATION_SERVICE', '/notifications');
+        $res = $api->get('NOTIFICATION_SERVICE', '/notification/' . urlencode($id));
+        echo '<pre>';
+        print_r($res);
+        echo '</pre>';
+        exit;
         $items = ($res['data'] ?? [])['items'] ?? ($res['data'] ?? []);
         return $this->view('notifications/index', compact('items'));
     }
 
-    // Open create notification form
-    public function create() {
-        if ($this->isPost()) {
-            $this->requireCsrf();
-            $api = new ApiClient($this->config);
-            $payload = $_POST;
-            unset($payload['_csrf']);
-            $res = $api->post('NOTIFICATION_SERVICE', '/notifications', $payload);
-            if (($res['status'] ?? 500) < 300) return $this->redirect('/notifications');
-            $error = $res['data']['message'] ?? 'Create failed';
-            return $this->view('notifications/create', compact('error'));
-        }
-        return $this->view('notifications/create');
-    }
+    // // Open create notification form
+    // public function create() {
+    //     if ($this->isPost()) {
+    //         $this->requireCsrf();
+    //         $api = new ApiClient($this->config);
+    //         $payload = $_POST;
+    //         unset($payload['_csrf']);
+    //         $res = $api->post('NOTIFICATION_SERVICE', '/notification', $payload);
+    //         if (($res['status'] ?? 500) < 300) return $this->redirect('/notifications');
+    //         $error = $res['data']['message'] ?? 'Create failed';
+    //         return $this->view('notifications/create', compact('error'));
+    //     }
+    //     return $this->view('notifications/create');
+    // }
 
     // Mark as read
     public function markAsRead($id){

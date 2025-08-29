@@ -10,7 +10,7 @@ return [
     'AUTH_SERVICE'           => $appUrl . '/user-service',
     'APPOINTMENT_SERVICE'    => $appUrl . '/appointment-service',
     'PRESCRIPTION_SERVICE'   => $appUrl . '/prescription-service',
-    'NOTIFICATION_SERVICE'   => $appUrl . '/noti-service',
+    'NOTIFICATION_SERVICE'   => $appUrl . '/notify-service',
     'MEDICAL_RECORD_SERVICE' => $appUrl . '/medical-record-service',
     'REPORT_SERVICE'         => $appUrl . '/report-service',
 ];

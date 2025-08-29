@@ -126,7 +126,7 @@ document.getElementById('chartType').addEventListener('change', function() {
 });
 <?php endif; ?>
 
-<?php if ($role === 'patient'): ?>
+<?php if ($role === 'patient' || $role === 'doctor'): ?>
 document.addEventListener('DOMContentLoaded', function() {
   const calendarEl = document.getElementById('calendar');
   if (!calendarEl) return;

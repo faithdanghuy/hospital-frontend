@@ -11,7 +11,6 @@ class AuthController extends Controller {
         $error = $_SESSION['error'] ?? null;
         $old   = $_SESSION['old'] ?? [];
 
-        // flush ngay sau khi lấy ra
         unset($_SESSION['error'], $_SESSION['old']);
 
         return $this->view('auth/login', compact('error', 'old'));
@@ -68,10 +67,10 @@ class AuthController extends Controller {
 
         if (($res['status'] ?? 500) === 200) {
             $_SESSION['success'] = 'Password changed successfully.';
-            return $this->redirect('/account');
+            return $this->redirect('/account/change-password');
         } else {
             $_SESSION['error'] = $res['data']['message'] ?? 'Failed to change password.';
-            return $this->redirect('/account');
+            return $this->redirect('/account/profile');
         }
     }
 
