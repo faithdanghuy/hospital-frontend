@@ -13,20 +13,11 @@
 
       <div class="actions">
         <?php if (!$isRead): ?>
-          <form method="delete" action="/notifications/delete/<?= urlencode($it['id']) ?>" style="display:inline">
-            <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
-            <button type="submit" class="delete-btn">Delete</button>
-          </form>
-
           <form method="post" action="/notifications/mark-read/<?= urlencode($it['id']) ?>" style="display:inline">
             <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
             <button type="submit" class="btn">Mark as read ✅</button>
           </form>
         <?php else: ?>
-          <form method="delete" action="/notifications/delete/<?= urlencode($it['id']) ?>" style="display:inline">
-            <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
-            <button type="submit" class="delete-btn">Delete</button>
-          </form>
           <span class="read-indicator">✓ Read</span>
         <?php endif; ?>
       </div>

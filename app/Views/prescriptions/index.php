@@ -1,7 +1,14 @@
 <?php use App\Core\Auth; ?>
+<?php
+  $statusCycle = ['', 'collected', 'not_collected']; 
+  $currentIndex = array_search(strtolower($status ?? ''), $statusCycle);
+  $nextIndex = ($currentIndex === false) ? 1 : ($currentIndex + 1) % count($statusCycle);
+  $nextStatus = $statusCycle[$nextIndex];
+?>
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Prescriptions</h1>
+  <span> Total rows: <strong><?= $total_rows ?></strong></span>
   <?php if (Auth::role() === 'doctor' || Auth::role() === 'admin'): ?>
     <a class="btn" href="/prescription/create">+ New</a>
   <?php endif; ?>
@@ -13,12 +20,16 @@
       <th>No.</th>
       <th>Patient</th>
       <th>Doctor</th>
-      <th>Status</th>
+      <th>
+        <a href="/prescriptions?page=<?= $page ?>&limit=<?= $limit ?>&status=<?= $nextStatus ?>">
+          Status <?= $status ? '(' . ucfirst($status) . ')' : '(All)' ?>
+        </a>
+      </th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <?php $stt = 1; ?>
+    <?php $stt = ((($page ?? 1) - 1) * ($limit ?? 10)) + 1; ?>
     <?php foreach (($items ?? []) as $it): ?>
     <?php 
       $status = strtolower($it['status'] ?? '-'); 
@@ -53,4 +64,16 @@
     <?php endforeach; ?>
   </tbody>
 </table>
+
+<!-- Pagination -->
+<?php if ($total_pages > 1): ?>
+  <nav class="pagination">
+    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+      <a class="page-link <?= $i == $page ? 'active' : '' ?>"
+         href="/prescriptions?page=<?= $i ?>&limit=<?= $limit ?>">
+        <?= $i ?>
+      </a>
+    <?php endfor; ?>
+  </nav>
+<?php endif; ?>
 <?php $content = ob_get_clean(); echo App\Core\View::render('partials/layout', compact('content')); ?>

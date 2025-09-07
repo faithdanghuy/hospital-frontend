@@ -8,24 +8,25 @@ class UserController extends Controller {
     public function index() {
         $api = new ApiClient($this->config);
 
-        $page = $_GET['page'] ?? 1;
+        $page  = $_GET['page'] ?? 1;
         $limit = $_GET['limit'] ?? 10;
-        $sort = $_GET['sort'] ?? 'id:asc';
+        $role  = $_GET['role'] ?? '';
 
         $res = $api->get('AUTH_SERVICE', '/account/filter', [
-            'page' => (int)$page,
             'limit' => (int)$limit,
-            'sort' => $sort
+            'page'  => (int)$page,
+            'role'  => $role,
         ]);
-        $data = $res['data']['data'] ?? [];
+
+        $data  = $res['data']['data'] ?? [];
         $items = $data['rows'] ?? [];
 
         return $this->view('users/index', [
-            'items' => $items,
-            'limit' => $data['limit'] ?? null,
-            'page' => $data['page'] ?? null,
-            'total_pages' => $data['total_pages'] ?? null,
-            'total_rows' => $data['total_rows'] ?? null,
+            'items'       => $items,
+            'limit'       => $data['limit'] ?? $limit,
+            'page'        => $data['page'] ?? $page,
+            'total_pages' => $data['total_pages'] ?? 1,
+            'total_rows'  => $data['total_rows'] ?? count($items),
         ]);
     }
 

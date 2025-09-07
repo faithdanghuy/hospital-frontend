@@ -55,11 +55,6 @@
 
         <button type="submit">Login</button>
       </form>
-
-      <div class="extra-links">
-        <a href="#">Forgot password?</a> | 
-        <a href="#">Register</a>
-      </div>
     </div>
   </div>
 </body>

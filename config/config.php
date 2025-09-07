@@ -1,5 +1,5 @@
 <?php
-$appUrl = getenv('APP_URL') ?: 'https://c8ba054f0ba5.ngrok-free.app';
+$appUrl = getenv('APP_URL') ?: 'https://1ff202d46b83.ngrok-free.app';
 
 return [
     // App settings

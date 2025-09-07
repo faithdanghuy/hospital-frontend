@@ -38,7 +38,7 @@ $router->add('GET', '/', [new DashboardController(), 'index'], [Middleware::auth
 // User
 $router->add('GET', '/account/register', [new UserController(), 'create'], [Middleware::auth(), Middleware::roles(['admin'])]);
 $router->add('POST', '/account/register', [new UserController(), 'store'], [Middleware::auth(), Middleware::roles(['admin'])]);
-$router->add('GET', '/account', [new UserController(), 'index'], [Middleware::auth()]);
+$router->add('GET', '/account', [new UserController(), 'index'], [Middleware::auth(), Middleware::roles(['admin'])]);
 $router->add('GET', '/account/profile', [new UserController(), 'myProfile'], [Middleware::auth()]);
 $router->add('GET', '/account/edit', [new UserController(), 'edit'], [Middleware::auth()]);
 $router->add('POST', '/account/update', [new UserController(), 'update'], [Middleware::auth()]);
@@ -67,11 +67,7 @@ $router->add('POST', '/medication/delete/{id}', [new MedicationController(), 'de
 
 // Notification
 $router->add('GET', '/notification', [new NotificationController(), 'index'], [Middleware::auth()]);
-// $router->add('GET', '/notifications/create', [new NotificationController(), 'create'], [Middleware::auth(), Middleware::roles(['admin'])]);
-// $router->add('POST', '/notifications', [new NotificationController(), 'store'], [Middleware::auth(), Middleware::roles(['admin'])]);
-// $router->add('GET', '/notifications/{id}', [new NotificationController(), 'show'], [Middleware::auth()]);
-// $router->add('GET', '/notifications/{id}/edit', [new NotificationController(), 'edit'], [Middleware::auth()]);
-// $router->add('POST', '/notifications/{id}/delete', [new NotificationController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin'])]);
+$router->add('POST', '/notifications/mark-read/{id}', [new NotificationController(), 'markAsRead'], [Middleware::auth()]);
 
 // Prescription
 $router->add('GET', '/prescriptions', [new PrescriptionController(), 'index'], [Middleware::auth()]);

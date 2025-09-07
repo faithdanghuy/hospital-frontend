@@ -45,8 +45,14 @@ class ApiClient {
         return ['status' => $status, 'data' => $json];
     }
 
-    public function get(string $service, string $path) {
-        return $this->request('GET', $this->config[$service] . $path);
+    public function get(string $service, string $path, array $params = []) {
+        $url = $this->config[$service] . $path;
+    
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
+        }
+    
+        return $this->request('GET', $url);
     }
 
     public function post(string $service, string $path, array $data) {

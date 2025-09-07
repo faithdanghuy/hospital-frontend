@@ -1,6 +1,7 @@
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Medication</h1>
+  <span> Total rows: <strong><?= $total_rows ?></strong></span>
   <a class="btn" href="/medication/create">+ New</a>
 </div>
 
@@ -36,4 +37,18 @@
     <?php endforeach; ?>
   </tbody>
 </table>
-<?php $content = ob_get_clean(); echo App\Core\View::render('partials/layout', compact('content')); ?>
+
+<!-- Pagination -->
+<?php if ($total_pages > 1): ?>
+  <nav class="pagination">
+    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+      <a class="page-link <?= $i == $page ? 'active' : '' ?>"
+         href="/medication?page=<?= $i ?>&limit=<?= $limit ?>">
+        <?= $i ?>
+      </a>
+    <?php endfor; ?>
+  </nav>
+<?php endif; ?>
+<?php $content = ob_get_clean(); 
+echo App\Core\View::render('partials/layout', compact('content')); 
+?>

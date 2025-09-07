@@ -1,16 +1,27 @@
 <?php
 namespace App\Controllers;
 use App\Core\Controller;
-use App\Core\Middleware;
 use App\Services\ApiClient;
 
 class PrescriptionController extends Controller {
     // Get app prescription data
     public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('PRESCRIPTION_SERVICE', '/prescription/filter');
-        $items = $res['data']['data']['rows'] ?? [];
-        return $this->view('prescriptions/index', compact('items'));
+        $res = $api->get('PRESCRIPTION_SERVICE', '/prescription/filter', [
+            'page' => $_GET['page'] ?? 1,
+            'limit' => $_GET['limit'] ?? 10,
+        ]);
+        $data  = $res['data']['data'] ?? [];
+        $items = $data['rows'] ?? [];
+
+        return $this->view('prescriptions/index', [
+            'items' => $items,
+            'limit' => $data['limit'] ?? 10,
+            'page'  => $data['page'] ?? 1,
+            'total_pages' => $data['total_pages'] ?? 1,
+            'total_rows'  => $data['total_rows'] ?? count($items),
+            'status' => $_GET['status'] ?? '',
+        ]);
     }
 
     // Get prescription detail

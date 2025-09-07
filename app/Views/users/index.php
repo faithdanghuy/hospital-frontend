@@ -1,13 +1,14 @@
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Users</h1>
-  <form method="get" action="/account/filter" style="display:inline-flex; align-items:center; gap:0.5em; margin-right: 1em;">
-    <label>Role</label>
+  <span> Total rows: <strong><?= $total_rows ?></strong></span>
+  <form method="get" action="/account" class="role-filter-form">
     <select name="role" id="role-filter" onchange="this.form.submit()">
+      <option value="" disabled selected>Select role</option>
       <option value="">All</option>
-      <option value="admin" <?= isset($_GET['role']) && $_GET['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
-      <option value="doctor" <?= isset($_GET['role']) && $_GET['role'] === 'doctor' ? 'selected' : '' ?>>Doctor</option>
-      <option value="patient" <?= isset($_GET['role']) && $_GET['role'] === 'patient' ? 'selected' : '' ?>>Patient</option>
+      <option value="admin"   <?= ($role ?? '') === 'admin' ? 'selected' : '' ?>>Admin</option>
+      <option value="doctor"  <?= ($role ?? '') === 'doctor' ? 'selected' : '' ?>>Doctor</option>
+      <option value="patient" <?= ($role ?? '') === 'patient' ? 'selected' : '' ?>>Patient</option>
     </select>
   </form>
   <a class="btn" href="/account/register">+ New User</a>
@@ -56,11 +57,14 @@
 <?php if ($total_pages > 1): ?>
   <nav class="pagination">
     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-      <a class="page-link <?= $i == ($page ?? 1) ? 'active' : '' ?>" href="/account?page=<?= $i ?>&limit=<?= $limit ?? 10 ?>">
+      <a class="page-link <?= $i == $page ? 'active' : '' ?>"
+         href="/account?page=<?= $i ?>&limit=<?= $limit ?>&role=<?= urlencode($role) ?>">
         <?= $i ?>
       </a>
     <?php endfor; ?>
   </nav>
 <?php endif; ?>
 
-<?php $content = ob_get_clean(); echo App\Core\View::render('partials/layout', compact('content')); ?>
+<?php $content = ob_get_clean(); 
+echo App\Core\View::render('partials/layout', compact('content')); 
+?>

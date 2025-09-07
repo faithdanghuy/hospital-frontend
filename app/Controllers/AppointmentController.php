@@ -7,8 +7,13 @@ class AppointmentController extends Controller {
     // Get all appointments
     public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('APPOINTMENT_SERVICE', '/appointment/filter');
-        $items = $res['data']['data']['rows'] ?? [];
+        $res = $api->get('APPOINTMENT_SERVICE', '/appointment/filter', [
+            'page'  => $_GET['page']  ?? 1,
+            'limit' => $_GET['limit'] ?? 10,
+            'status'=> $_GET['status'] ?? '',
+        ]);
+        $data  = $res['data']['data'] ?? [];
+        $items = $data['rows'] ?? [];
 
         foreach ($items as &$it) {
             if (!empty($it['scheduled_at'])) {
@@ -18,7 +23,14 @@ class AppointmentController extends Controller {
             }
         }
         unset($it);
-        return $this->view('appointments/index', compact('items'));
+        return $this->view('appointments/index', [
+            'items'       => $items,
+            'limit'       => $data['limit'] ?? 10,
+            'page'        => $data['page'] ?? 1,
+            'total_pages' => $data['total_pages'] ?? 1,
+            'total_rows'  => $data['total_rows'] ?? count($items),
+            'status'      => $_GET['status'] ?? '',
+        ]);
     }
 
     // Show appointment details

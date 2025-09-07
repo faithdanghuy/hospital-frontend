@@ -7,9 +7,20 @@ class MedicationController extends Controller {
     // Get all med data
     public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('PRESCRIPTION_SERVICE', '/medication/filter');
-        $items = ($res['data']['data']['rows'] ?? []);
-        return $this->view('medication/index', compact('items'));
+        $res = $api->get('PRESCRIPTION_SERVICE', '/medication/filter', [
+            'page' => $_GET['page'] ?? 1,
+            'limit' => $_GET['limit'] ?? 10,
+        ]);
+        $data  = $res['data']['data'] ?? [];
+        $items = $data['rows'] ?? [];
+        
+        return $this->view('medication/index', [
+            'items' => $items,
+            'limit' => $data['limit'] ?? 10,
+            'page'  => $data['page'] ?? 1,
+            'total_pages' => $data['total_pages'] ?? 1,
+            'total_rows'  => $data['total_rows'] ?? count($items),
+        ]);
     }
 
     // Show medication details
@@ -39,10 +50,6 @@ class MedicationController extends Controller {
             "unit"        => $_POST['unit']
         ];
 
-        // echo '<pre>';
-        // var_dump($payload);
-        // echo '</pre>';
-        // exit;
         $res = $api->post('PRESCRIPTION_SERVICE', '/medication/create', $payload);
         if (($res['status'] ?? 500) < 300) {
             return $this->redirect('/medications');

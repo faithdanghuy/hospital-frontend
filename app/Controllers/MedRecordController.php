@@ -8,9 +8,18 @@ class MedRecordController extends Controller {
     // Get all medical records
     public function index() {
         $api = new ApiClient($this->config);
-        $res = $api->get('MEDICAL_RECORD_SERVICE', '/medical-records');
+        $res = $api->get('MEDICAL_RECORD_SERVICE', '/medical-records', [
+            'page' => $_GET['page'] ?? 1,
+            'limit' => $_GET['limit'] ?? 10,
+        ]);
         $items = $res['data'] ?? [];
-        return $this->view('med-records/index', compact('items'));
+        return $this->view('med-records/index', [
+            'items' => $items,
+            'limit' => $_GET['limit'] ?? 10,
+            'page'  => $_GET['page'] ?? 1,
+            'total_pages' => $res['total_pages'] ?? 1,
+            'total_rows'  => $res['total_rows'] ?? count($items),
+        ]);
     }
 
     // Show the create medical record form
