@@ -773,3 +773,280 @@ button:hover,
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+/* =================== DASHBOARD GLOBAL =================== */
+body {
+  background: #f5f7fa;
+  font-family: 'Poppins', sans-serif;
+  color: #1e1e2f;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  color: #1e1e2f;
+}
+
+/* =================== GRID & CARDS =================== */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card.summary {
+  background: linear-gradient(135deg, #ffffff, #f0f4ff);
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.card.summary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card.summary h3 {
+  font-size: 1.1rem;
+  color: #4F46E5;
+  margin-bottom: 10px;
+}
+
+.card.summary .number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e1e2f;
+}
+
+.card.summary .btn-link {
+  display: inline-block;
+  margin-top: 12px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.card.summary .btn-link:hover {
+  background: linear-gradient(135deg, #6366F1, #4F46E5);
+  transform: translateY(-2px);
+}
+
+/* =================== REPORTS =================== */
+.reports {
+  margin-top: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.reports h2 {
+  margin-bottom: 15px;
+  color: #4F46E5;
+}
+
+#chartType {
+  max-width: 250px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 8px;
+  font-size: 0.95rem;
+}
+
+/* =================== CALENDAR =================== */
+.calendar-section {
+  margin-top: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+#calendar {
+  margin-top: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* =================== FULLCALENDAR CUSTOM =================== */
+.fc {
+  font-family: 'Poppins', sans-serif;
+}
+
+.fc-toolbar-title {
+  color: #4F46E5;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.fc-button {
+  background: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.fc-button:hover {
+  background: #6366F1;
+}
+
+.fc-daygrid-event {
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 4px 6px;
+}
+
+/* =================== CHART CUSTOM =================== */
+canvas#dashboardChart {
+  max-width: 100%;
+  border-radius: 12px;
+  background: #f9fafc;
+  padding: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* =================== RESPONSIVE =================== */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* =================== CHANGE PASSWORD FORM =================== */
+form {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  max-width: 420px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+form h1 {
+  text-align: center;
+  color: #4F46E5;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+form label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+form input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+form input[type="password"]:focus {
+  border-color: #4F46E5;
+  box-shadow: 0 0 8px rgba(79,70,229,0.3);
+  outline: none;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-actions .btn {
+  flex: 1;
+  padding: 12px 0;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+
+.form-actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+.form-actions .btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.form-actions .btn-secondary:hover {
+  background: #5a6268;
+}
+
+.error-message {
+  background: #ffe0e0;
+  color: #b91c1c;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+/* Form actions (Cancel, Update Password) */
+.form-actions {
+    display: flex;
+    justify-content: center; /* căn giữa */
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* Nút Update Password */
+.form-actions .btn {
+    flex: 1 1 150px; /* co dãn vừa đủ */
+    padding: 12px 0;
+    background: linear-gradient(45deg, #457b9d, #1d3557);
+    color: white;
+    border: none; /* bỏ viền trắng thừa */
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.form-actions .btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #1d3557, #457b9d);
+}
+
+/* Nút Cancel */
+.form-actions .btn-secondary {
+    flex: 1 1 150px;
+    background: #6c757d;
+    color: white;
+    border: none; /* bỏ viền trắng thừa */
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.form-actions .btn-secondary:hover {
+    background: #5a6268;
+}
