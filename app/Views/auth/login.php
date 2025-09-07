@@ -11,7 +11,7 @@
     <!-- Nửa trái: Ảnh minh họa -->
     <div class="login-illustration">
       <div class="overlay"></div>
-      <h1 class="illustration-title">Welcome to<br> Nhóm 12 International Hospital</h1>
+      <h1 class="illustration-title">Welcome to<br> Group 12 International Hospital</h1>
       <p class="illustration-text">Your health, our priority</p>
       <div class="animated-icons">
         <span>❤️</span>
