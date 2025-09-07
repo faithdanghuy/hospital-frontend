@@ -4,23 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Login</title>
+  <title>Hospital Login</title>
 </head>
 <body>
   <div class="login-wrapper">
+    <!-- Nửa trái: Ảnh minh họa -->
+    <div class="login-illustration">
+      <div class="overlay"></div>
+      <h1 class="illustration-title">Welcome to<br> Nhóm 12 International Hospital</h1>
+      <p class="illustration-text">Your health, our priority</p>
+      <div class="animated-icons">
+        <span>❤️</span>
+        <span>💊</span>
+        <span>🩺</span>
+      </div>
+    </div>
+
+    <!-- Nửa phải: Form -->
     <div class="form-container">
-      <h1 style="margin-bottom: 1rem;">Login</h1>
+      <div class="logo">+</div>
+      <h2>Hospital Portal</h2>
+      <p class="subtitle">Sign in to access patient records and appointments</p>
 
       <!-- Error handling -->
       <?php if (!empty($error)): ?>
-        <div class="error-message" style="color: red; margin-bottom: 10px;">
+        <div class="error-message">
           <?= htmlspecialchars($error) ?>
         </div>
       <?php endif; ?>
-      
+
       <form action="/auth/login" method="POST" id="login-form">
         <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-        
+
         <input type="text" 
               name="phone" 
               id="phone-number" 
@@ -37,9 +52,14 @@
               id="password" 
               placeholder="Password" 
               required>
-              
+
         <button type="submit">Login</button>
       </form>
+
+      <div class="extra-links">
+        <a href="#">Forgot password?</a> | 
+        <a href="#">Register</a>
+      </div>
     </div>
   </div>
 </body>
