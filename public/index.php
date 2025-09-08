@@ -66,7 +66,7 @@ $router->add('POST', '/medication/delete/{id}', [new MedicationController(), 'de
 
 // Notification
 $router->add('GET', '/notification', [new NotificationController(), 'index'], [Middleware::auth()]);
-$router->add('POST', '/notifications/mark-read/{id}', [new NotificationController(), 'markAsRead'], [Middleware::auth()]);
+$router->add('POST', '/notification/mark-read/{id}', [new NotificationController(), 'markAsRead'], [Middleware::auth()]);
 
 // Prescription
 $router->add('GET', '/prescriptions', [new PrescriptionController(), 'index'], [Middleware::auth()]);

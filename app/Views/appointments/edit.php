@@ -1,3 +1,4 @@
+<?php use App\Core\Auth; ?>
 <?php ob_start(); ?>
 <div class="container">
   <h1 style="text-align: center;">Edit Appointment</h1>
@@ -29,6 +30,7 @@
       <input type="text" id="note" name="note" value="<?= htmlspecialchars($item['note'] ?? ''); ?>" required>
     </div>
 
+    <?php if (Auth::role() === 'doctor' || Auth::role() === 'admin'): ?>
     <div class="form-group">
       <label>Status</label>
       <select id="status" name="status" required>
@@ -42,6 +44,7 @@
           <?php endforeach; ?>
       </select>
     </div>
+    <?php endif; ?>
 
     <button type="submit" class="btn">Save</button>
   </form>

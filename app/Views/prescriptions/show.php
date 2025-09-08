@@ -9,7 +9,7 @@ $medications = $item['medications'] ?? [];
 $createdAt = !empty($item['created_at']) ? (new DateTime($item['created_at']))->format('d/m/Y H:i') : '-';
 $updatedAt = !empty($item['updated_at']) ? (new DateTime($item['updated_at']))->format('d/m/Y H:i') : '-';
 ?>
-
+<?php use App\Core\Auth; ?>
 <?php ob_start(); ?>
 <div class="profile-container">
   <div class="profile-card">
@@ -94,7 +94,9 @@ $updatedAt = !empty($item['updated_at']) ? (new DateTime($item['updated_at']))->
     </div>
 
     <div class="profile-actions">
+      <?php if (Auth::role() === 'doctor' || Auth::role() === 'admin'): ?>
       <a href="/prescription/edit/<?= htmlspecialchars($prescriptionId) ?>" class="btn">Edit</a>
+      <?php endif; ?>
       <a href="/prescriptions" class="btn btn-secondary">Back</a>
     </div>
   </div>

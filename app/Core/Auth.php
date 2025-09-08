@@ -13,7 +13,20 @@ class Auth {
             'phone'     => $data['phone'] ?? null,
             'avatar'    => $data['avatar'] ?? null,
             'birthday'  => $data['birthday'] ?? null,
+            'address'   => $data['address'] ?? null,
+            'gender'    => $data['gender'] ?? null
         ];
+    }
+
+    public static function updateUser(array $data): void {
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['user'] = [];
+        }
+
+        // Chỉ update những field có trong mảng truyền vào
+        foreach ($data as $key => $value) {
+            $_SESSION['user'][$key] = $value;
+        }
     }
     
     public static function check(): bool {

@@ -59,3 +59,9 @@
   </div>
 </body>
 </html>
+
+<!-- 
+patient1: 0900000001
+doctor1: 0930000001
+admin1: 0950000001
+password: phonenumber@1995 -->

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Core\Controller;
+use App\Core\Auth;
 use App\Services\ApiClient;
 
 class UserController extends Controller {
@@ -76,6 +77,14 @@ class UserController extends Controller {
         $res = $api->patch('AUTH_SERVICE', '/account/update', $payload);
 
         if (($res['status'] ?? 500) < 300) {
+            Auth::updateUser([
+                'full_name' => $payload['full_name'] ?? null,
+                'email'     => $payload['email'] ?? null,
+                'phone'     => $payload['phone'] ?? null,
+                'address'   => $payload['address'] ?? null,
+                'birthday'  => $payload['birthday'] ?? null,
+                'gender'    => $payload['gender'] ?? null
+            ]);
             return $this->redirect('/account/profile');
         }
         $error = $res['data']['message'] ?? 'Update profile failed';
@@ -92,6 +101,14 @@ class UserController extends Controller {
         $res = $api->patch('AUTH_SERVICE', '/account/edit/' . urlencode($id), $payload);
 
         if (($res['status'] ?? 500) < 300) {
+            Auth::updateUser([
+                'full_name' => $payload['full_name'] ?? null,
+                'email'     => $payload['email'] ?? null,
+                'phone'     => $payload['phone'] ?? null,
+                'address'   => $payload['address'] ?? null,
+                'birthday'  => $payload['birthday'] ?? null,
+                'gender'    => $payload['gender'] ?? null
+            ]);
             return $this->redirect('/account/detail/' . urlencode($id));
         }
         $error = $res['data']['message'] ?? 'Update user failed';

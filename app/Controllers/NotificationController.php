@@ -9,6 +9,7 @@ class NotificationController extends Controller {
         $api = new ApiClient($this->config);
         $res = $api->get('NOTIFICATION_SERVICE', '/notify/notification');
         $items = $res['data']['data'] ?? [];
+        echo '<pre>'; print_r($items); echo '</pre>';
         return $this->view('notifications/index', compact('items'));
     }
 
@@ -16,15 +17,7 @@ class NotificationController extends Controller {
     public function markAsRead($id){
         $this->requireCsrf();
         $api = new ApiClient($this->config);
-        $res = $api->post('NOTIFICATION_SERVICE', '/notify/mark-read/' . urlencode($id), []);
-        return $this->redirect('/notifications');
+        $res = $api->post('NOTIFICATION_SERVICE', '/notify/mark-read/' . urlencode($id), ["is_read" => true]);
+        return $this->redirect('/notification');
     }
-    
-    // // Delete a notification by id
-    // public function delete($id) {
-    //     $this->requireCsrf();
-    //     $api = new ApiClient($this->config);
-    //     $api->delete('NOTIFICATION_SERVICE', '/notification/delete/' . urlencode($id));
-    //     return $this->redirect('/notifications');
-    // }
 }

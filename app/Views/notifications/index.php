@@ -13,9 +13,9 @@
 
       <div class="actions">
         <?php if (!$isRead): ?>
-          <form method="post" action="/notifications/mark-read/<?= urlencode($it['id']) ?>" style="display:inline">
+          <form method="post" action="/notification/mark-read/<?= urlencode($it['id']) ?>">
             <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
-            <button type="submit" class="btn">Mark as read ✅</button>
+            <button type="submit">Mark as read ✅</button>
           </form>
         <?php else: ?>
           <span class="read-indicator">✓ Read</span>

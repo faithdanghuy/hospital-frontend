@@ -1,10 +1,4 @@
 <?php use App\Core\Auth; ?>
-<?php
-  $statusCycle = ['', 'collected', 'not_collected']; 
-  $currentIndex = array_search(strtolower($status ?? ''), $statusCycle);
-  $nextIndex = ($currentIndex === false) ? 1 : ($currentIndex + 1) % count($statusCycle);
-  $nextStatus = $statusCycle[$nextIndex];
-?>
 <?php ob_start(); ?>
 <div class="header-actions">
   <h1>Prescriptions</h1>
@@ -20,11 +14,7 @@
       <th>No.</th>
       <th>Patient</th>
       <th>Doctor</th>
-      <th>
-        <a href="/prescriptions?page=<?= $page ?>&limit=<?= $limit ?>&status=<?= $nextStatus ?>">
-          Status <?= $status ? '(' . ucfirst($status) . ')' : '(All)' ?>
-        </a>
-      </th>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -54,11 +44,13 @@
       <td><span class="badge <?= $statusClass ?>"><?= $statusText ?></span></td>
       <td>
         <a href="/prescription/detail/<?= urlencode($it['id']) ?>" class="btn">View</a>
+        <?php if (Auth::role() === 'doctor' || Auth::role() === 'admin'): ?>
         <a href="/prescription/edit/<?= urlencode($it['id']) ?>" class="btn">Edit</a>
         <form method="post" action="/prescriptions/delete/<?= urlencode($it['id']) ?>" style="display:inline" onsubmit="return confirm('Delete?')">
           <input type="hidden" name="_csrf" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
           <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
         </form>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
