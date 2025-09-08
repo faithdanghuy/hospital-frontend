@@ -5,7 +5,7 @@
 
 <div class="notifications-list">
   <?php foreach ($items as $it): 
-      $isRead = !empty($it['is_read']);
+    $isRead = isset($it['is_read']) ? (bool)$it['is_read'] : false;
   ?>
     <div class="notification-card <?= $isRead ? 'read' : 'unread' ?>">
       <h3><?= htmlspecialchars($it['title']) ?></h3>
