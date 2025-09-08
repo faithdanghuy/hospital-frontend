@@ -19,7 +19,6 @@ use App\Controllers\MedicationController;
 use App\Controllers\AppointmentController;
 use App\Controllers\NotificationController;
 use App\Controllers\PrescriptionController;
-use App\Controllers\MedRecordController;
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -77,13 +76,5 @@ $router->add('POST', '/prescription/create', [new PrescriptionController(), 'sto
 $router->add('GET', '/prescription/edit/{id}', [new PrescriptionController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 $router->add('POST', '/prescription/update/{id}', [new PrescriptionController(), 'update'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 $router->add('POST', '/prescription/delete/{id}', [new PrescriptionController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
-
-// Medical Records
-$router->add('GET', '/medical-records', [new MedRecordController(), 'index'], [Middleware::auth()]);
-$router->add('GET', '/medical-records/create', [new MedRecordController(), 'create'], [Middleware::auth()]);
-$router->add('POST', '/medical-records', [new MedRecordController(), 'store'], [Middleware::auth()]);
-$router->add('GET', '/medical-records/{id}', [new MedRecordController(), 'show'], [Middleware::auth()]);
-$router->add('GET', '/medical-records/{id}/edit', [new MedRecordController(), 'edit'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
-$router->add('POST', '/medical-records/{id}/delete', [new MedRecordController(), 'delete'], [Middleware::auth(), Middleware::roles(['admin', 'doctor'])]);
 
 $router->dispatch();
